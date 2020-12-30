@@ -12,4 +12,4 @@ export LD_LIBRARY_PATH="/home/emanuele/catkin_ws/devel/.private/gazebo_joint_tor
 export PKG_CONFIG_PATH="/home/emanuele/catkin_ws/devel/.private/gazebo_joint_torsional_spring/lib/pkgconfig:$PKG_CONFIG_PATH"
 export PWD='/home/emanuele/catkin_ws/build/gazebo_joint_torsional_spring'
 export ROSLISP_PACKAGE_DIRECTORIES="/home/emanuele/catkin_ws/devel/.private/gazebo_joint_torsional_spring/share/common-lisp:$ROSLISP_PACKAGE_DIRECTORIES"
-export ROS_PACKAGE_PATH="/home/emanuele/catkin_ws/src/gazebo_joint_torsional_spring:$ROS_PACKAGE_PATH"
+export ROS_PACKAGE_PATH="/home/emanuele/catkin_ws/src/gazebo_joint_torsional_spring:/home/emanuele/catkin_ws/src/CrazyS/gazebo_joint_torsional_spring:$ROS_PACKAGE_PATH"
