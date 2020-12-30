@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.5.1-0-g916b5db  Build Version: 1.5.7152.31018
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="cage">
+
+  <link
+    name="cage">
+    <inertial>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <mass
+        value="0.015" />
+      <inertia
+        ixx="0.00087148"
+        ixy="1.2654E-05"
+        ixz="5.3411E-06"
+        iyy="0.00089445"
+        iyz="5.3032E-06"
+        izz="0.00093854" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="1.5707963267949 0 0" />
+      <geometry>
+        <mesh
+          filename="package://planar_structure/meshes/Cage.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="1.5707963267949 0 0" />
+      <geometry>
+        <mesh
+          filename="package://rotors_description/meshes/Cage.STL" />
+      </geometry>
+    </collision>
+  </link>
+<!--
+  <gazebo reference="cage">
+    <collision>
+      <surface>
+        <friction>
+	  <ode>
+            <mu>1000</mu>
+            <mu2>1000</mu2>
+          </ode>
+          <torsional>
+            <coefficient>100.5</coefficient>
+	    <surface_radius>0.51</surface_radius>
+            <use_patch_radius>false</use_patch_radius>
+          </torsional>
+        </friction>
+	<contact>
+        <ode>
+          <max_vel>1.000000</max_vel>
+          <min_depth>0.000000</min_depth>
+        </ode>
+      </contact>
+      </surface>
+    </collision>
+  </gazebo>
+-->
+  <joint
+    name="cage_joint"
+    type="fixed">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 1.5708" />
+    <parent
+      link="FT_sensor_nano17_measure" />
+    <child
+      link="cage" />
+    <axis
+      xyz="1 0 0" />
+  </joint>
+
+</robot>
