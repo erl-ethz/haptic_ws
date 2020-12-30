@@ -1,0 +1,84 @@
+[  0%] Built target sensor_msgs_generate_messages_py
+[  0%] Built target rosgraph_msgs_generate_messages_nodejs
+[  0%] Built target actionlib_msgs_generate_messages_py
+[  0%] Built target rosgraph_msgs_generate_messages_eus
+[  0%] Built target sensor_msgs_generate_messages_cpp
+[  0%] Built target rosgraph_msgs_generate_messages_py
+[  0%] Built target roscpp_generate_messages_lisp
+[  0%] Built target rosgraph_msgs_generate_messages_lisp
+[  0%] Built target std_msgs_generate_messages_nodejs
+[  0%] Built target std_msgs_generate_messages_py
+[  0%] Built target std_msgs_generate_messages_lisp
+[  0%] Built target geometry_msgs_generate_messages_py
+[  0%] Built target rosgraph_msgs_generate_messages_cpp
+[  0%] Built target actionlib_msgs_generate_messages_lisp
+[  0%] Built target nav_msgs_generate_messages_py
+[  0%] Built target sensor_msgs_generate_messages_nodejs
+[  0%] Built target geometry_msgs_generate_messages_eus
+[  0%] Built target actionlib_msgs_generate_messages_nodejs
+[  0%] Built target roscpp_generate_messages_nodejs
+[  0%] Built target std_msgs_generate_messages_eus
+[  0%] Built target geometry_msgs_generate_messages_nodejs
+[  0%] Built target trajectory_msgs_generate_messages_py
+[  0%] Built target roscpp_generate_messages_eus
+[  0%] Built target geometry_msgs_generate_messages_lisp
+[  0%] Built target roscpp_generate_messages_cpp
+[  0%] Built target nav_msgs_generate_messages_nodejs
+[  0%] Built target std_msgs_generate_messages_cpp
+[  0%] Built target trajectory_msgs_generate_messages_nodejs
+[  0%] Built target sensor_msgs_generate_messages_lisp
+[  0%] Built target geometry_msgs_generate_messages_cpp
+[  0%] Built target mav_msgs_generate_messages_eus
+[  0%] Built target nav_msgs_generate_messages_lisp
+[  0%] Built target trajectory_msgs_generate_messages_lisp
+[  0%] Built target mav_msgs_generate_messages_lisp
+[  0%] Built target mav_msgs_generate_messages_nodejs
+[  0%] Built target mav_msgs_generate_messages_py
+[  0%] Built target sensor_msgs_generate_messages_eus
+[  0%] Built target roscpp_generate_messages_py
+[  0%] Built target trajectory_msgs_generate_messages_eus
+[  0%] Built target nav_msgs_generate_messages_cpp
+[  0%] Built target trajectory_msgs_generate_messages_cpp
+[  0%] Built target actionlib_msgs_generate_messages_cpp
+[  0%] Built target nav_msgs_generate_messages_eus
+[  0%] Built target actionlib_msgs_generate_messages_eus
+[  0%] Built target mav_msgs_generate_messages_cpp
+[35m[1mScanning dependencies of target high_level_resting_roll_thrust_controller[0m
+[  5%] Built target crazyflie_complementary_filter
+[ 11%] Built target sensfusion6
+[ 17%] Built target internal_model_controller
+[ 23%] Built target high_level_resting_controller
+[ 29%] Built target high_level_2D_position_controller
+[ 35%] Built target crazyflie_onboard_controller
+[ 41%] Built target roll_pitch_yawrate_thrust_controller_crazyflie
+[ 52%] Built target mellinger_controller
+[ 52%] Built target position_controller
+[ 58%] Built target lee_position_controller
+[ 67%] Built target high_level_2D_roll_thrust_controller
+[ 70%] Built target roll_pitch_yawrate_thrust_controller
+[ 73%] [32mBuilding CXX object CMakeFiles/high_level_resting_roll_thrust_controller.dir/src/nodes/high_level_resting_roll_thrust_controller.cpp.o[0m
+[ 79%] Built target roll_pitch_yawrate_thrust_crazyflie_node
+[ 85%] Built target lee_position_controller_node
+[ 91%] Built target position_controller_node
+[ 97%] Built target roll_pitch_yawrate_thrust_controller_node
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_resting_roll_thrust_controller.cpp:[m[K In function ‘[01m[Kvoid StateMachine()[m[K’:
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_resting_roll_thrust_controller.cpp:361:4:[m[K [01;31m[Kerror: [m[K‘[01m[KComputeDesiredHeading[m[K’ was not declared in this scope
+    [01;31m[KComputeDesiredHeading[m[K();
+    [01;31m[K^~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_resting_roll_thrust_controller.cpp:361:4:[m[K [01;36m[Knote: [m[Ksuggested alternative: ‘[01m[KComputeDesiredRoll[m[K’
+    [01;36m[KComputeDesiredHeading[m[K();
+    [01;36m[K^~~~~~~~~~~~~~~~~~~~~[m[K
+    [32m[KComputeDesiredRoll[m[K
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_resting_roll_thrust_controller.cpp:368:42:[m[K [01;31m[Kerror: [m[K‘[01m[Kdesired_heading[m[K’ was not declared in this scope
+   ControlStrategy(commanded_thrust, sign*[01;31m[Kdesired_heading[m[K);
+                                          [01;31m[K^~~~~~~~~~~~~~~[m[K
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_resting_roll_thrust_controller.cpp:368:42:[m[K [01;36m[Knote: [m[Ksuggested alternative: ‘[01m[Kdesired_thrust[m[K’
+   ControlStrategy(commanded_thrust, sign*[01;36m[Kdesired_heading[m[K);
+                                          [01;36m[K^~~~~~~~~~~~~~~[m[K
+                                          [32m[Kdesired_thrust[m[K
+CMakeFiles/high_level_resting_roll_thrust_controller.dir/build.make:62: recipe for target 'CMakeFiles/high_level_resting_roll_thrust_controller.dir/src/nodes/high_level_resting_roll_thrust_controller.cpp.o' failed
+make[2]: *** [CMakeFiles/high_level_resting_roll_thrust_controller.dir/src/nodes/high_level_resting_roll_thrust_controller.cpp.o] Error 1
+CMakeFiles/Makefile2:1331: recipe for target 'CMakeFiles/high_level_resting_roll_thrust_controller.dir/all' failed
+make[1]: *** [CMakeFiles/high_level_resting_roll_thrust_controller.dir/all] Error 2
+Makefile:140: recipe for target 'all' failed
+make: *** [all] Error 2

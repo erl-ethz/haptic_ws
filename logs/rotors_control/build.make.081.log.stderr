@@ -1,0 +1,41 @@
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_resting_controller.cpp:[m[K In function ‘[01m[Kvoid StateMachine()[m[K’:
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_resting_controller.cpp:375:20:[m[K [01;31m[Kerror: [m[Kreference to ‘[01m[Kcount[m[K’ is ambiguous
+    ControlStrategy([01;31m[Kcount[m[K*pushing_effort*lateral_slide/MAX_LATERAL_SLIDING, sign*desired_heading);
+                    [01;31m[K^~~~~[m[K
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_resting_controller.cpp:97:5:[m[K [01;36m[Knote: [m[Kcandidates are: int count
+ int [01;36m[Kcount[m[K;
+     [01;36m[K^~~~~[m[K
+In file included from [01m[K/usr/include/c++/7/algorithm:62:0[m[K,
+                 from [01m[K/usr/include/eigen3/Eigen/Core:269[m[K,
+                 from [01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_resting_controller.cpp:25[m[K:
+[01m[K/usr/include/c++/7/bits/stl_algo.h:4076:5:[m[K [01;36m[Knote: [m[K                template<class _IIter, class _Tp> typename std::iterator_traits<_Iterator>::difference_type std::count(_IIter, _IIter, const _Tp&)
+     [01;36m[Kcount[m[K(_InputIterator __first, _InputIterator __last, const _Tp& __value)
+     [01;36m[K^~~~~[m[K
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_resting_controller.cpp:378:4:[m[K [01;31m[Kerror: [m[Kreference to ‘[01m[Kcount[m[K’ is ambiguous
+    [01;31m[Kcount[m[K++;
+    [01;31m[K^~~~~[m[K
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_resting_controller.cpp:97:5:[m[K [01;36m[Knote: [m[Kcandidates are: int count
+ int [01;36m[Kcount[m[K;
+     [01;36m[K^~~~~[m[K
+In file included from [01m[K/usr/include/c++/7/algorithm:62:0[m[K,
+                 from [01m[K/usr/include/eigen3/Eigen/Core:269[m[K,
+                 from [01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_resting_controller.cpp:25[m[K:
+[01m[K/usr/include/c++/7/bits/stl_algo.h:4076:5:[m[K [01;36m[Knote: [m[K                template<class _IIter, class _Tp> typename std::iterator_traits<_Iterator>::difference_type std::count(_IIter, _IIter, const _Tp&)
+     [01;36m[Kcount[m[K(_InputIterator __first, _InputIterator __last, const _Tp& __value)
+     [01;36m[K^~~~~[m[K
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_resting_controller.cpp:[m[K In function ‘[01m[Kint main(int, char**)[m[K’:
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_resting_controller.cpp:492:2:[m[K [01;31m[Kerror: [m[Kreference to ‘[01m[Kcount[m[K’ is ambiguous
+  [01;31m[Kcount[m[K = 1;
+  [01;31m[K^~~~~[m[K
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_resting_controller.cpp:97:5:[m[K [01;36m[Knote: [m[Kcandidates are: int count
+ int [01;36m[Kcount[m[K;
+     [01;36m[K^~~~~[m[K
+In file included from [01m[K/usr/include/c++/7/algorithm:62:0[m[K,
+                 from [01m[K/usr/include/eigen3/Eigen/Core:269[m[K,
+                 from [01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_resting_controller.cpp:25[m[K:
+[01m[K/usr/include/c++/7/bits/stl_algo.h:4076:5:[m[K [01;36m[Knote: [m[K                template<class _IIter, class _Tp> typename std::iterator_traits<_Iterator>::difference_type std::count(_IIter, _IIter, const _Tp&)
+     [01;36m[Kcount[m[K(_InputIterator __first, _InputIterator __last, const _Tp& __value)
+     [01;36m[K^~~~~[m[K
+make[2]: *** [CMakeFiles/high_level_resting_controller.dir/src/nodes/high_level_resting_controller.cpp.o] Error 1
+make[1]: *** [CMakeFiles/high_level_resting_controller.dir/all] Error 2
+make: *** [all] Error 2

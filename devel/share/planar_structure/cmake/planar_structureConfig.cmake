@@ -1,0 +1,1 @@
+/home/emanuele/catkin_ws/devel/.private/planar_structure/share/planar_structure/cmake/planar_structureConfig.cmake

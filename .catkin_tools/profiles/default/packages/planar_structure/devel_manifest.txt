@@ -1,0 +1,5 @@
+planar_structure
+/home/emanuele/catkin_ws/devel/.private/planar_structure/cmake.lock /home/emanuele/catkin_ws/devel/./cmake.lock
+/home/emanuele/catkin_ws/devel/.private/planar_structure/share/planar_structure/cmake/planar_structureConfig.cmake /home/emanuele/catkin_ws/devel/share/planar_structure/cmake/planar_structureConfig.cmake
+/home/emanuele/catkin_ws/devel/.private/planar_structure/share/planar_structure/cmake/planar_structureConfig-version.cmake /home/emanuele/catkin_ws/devel/share/planar_structure/cmake/planar_structureConfig-version.cmake
+/home/emanuele/catkin_ws/devel/.private/planar_structure/lib/pkgconfig/planar_structure.pc /home/emanuele/catkin_ws/devel/lib/pkgconfig/planar_structure.pc

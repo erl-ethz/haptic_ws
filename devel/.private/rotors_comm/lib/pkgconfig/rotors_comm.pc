@@ -1,0 +1,8 @@
+prefix=/home/emanuele/catkin_ws/devel/.private/rotors_comm
+
+Name: rotors_comm
+Description: Description of rotors_comm
+Version: 6.0.8
+Cflags: -I/home/emanuele/catkin_ws/devel/.private/rotors_comm/include
+Libs: -L${prefix}/lib 
+Requires: message_runtime

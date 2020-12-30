@@ -1,0 +1,42 @@
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_resting_roll_thrust_controller.cpp:[m[K In function ‘[01m[Kvoid ComputeDesiredRoll()[m[K’:
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_resting_roll_thrust_controller.cpp:230:2:[m[K [01;31m[Kerror: [m[K‘[01m[Kdesired_heading[m[K’ was not declared in this scope
+  [01;31m[Kdesired_heading[m[K = atan2(fabs(ft_filtered_msg.force.y), fabs(ft_filtered_msg.force.z));
+  [01;31m[K^~~~~~~~~~~~~~~[m[K
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_resting_roll_thrust_controller.cpp:230:2:[m[K [01;36m[Knote: [m[Ksuggested alternative: ‘[01m[Kdesired_thrust[m[K’
+  [01;36m[Kdesired_heading[m[K = atan2(fabs(ft_filtered_msg.force.y), fabs(ft_filtered_msg.force.z));
+  [01;36m[K^~~~~~~~~~~~~~~[m[K
+  [32m[Kdesired_thrust[m[K
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_resting_roll_thrust_controller.cpp:[m[K In function ‘[01m[Kvoid ControlStrategy(double, double)[m[K’:
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_resting_roll_thrust_controller.cpp:292:2:[m[K [01;31m[Kerror: [m[K‘[01m[Kcommanded_heading[m[K’ was not declared in this scope
+  [01;31m[Kcommanded_heading[m[K = heading_d;
+  [01;31m[K^~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_resting_roll_thrust_controller.cpp:292:2:[m[K [01;36m[Knote: [m[Ksuggested alternative: ‘[01m[Kcommanded_thrust[m[K’
+  [01;36m[Kcommanded_heading[m[K = heading_d;
+  [01;36m[K^~~~~~~~~~~~~~~~~[m[K
+  [32m[Kcommanded_thrust[m[K
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_resting_roll_thrust_controller.cpp:292:22:[m[K [01;31m[Kerror: [m[K‘[01m[Kheading_d[m[K’ was not declared in this scope
+  commanded_heading = [01;31m[Kheading_d[m[K;
+                      [01;31m[K^~~~~~~~~[m[K
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_resting_roll_thrust_controller.cpp:292:22:[m[K [01;36m[Knote: [m[Ksuggested alternative: ‘[01m[Kreadlinkat[m[K’
+  commanded_heading = [01;36m[Kheading_d[m[K;
+                      [01;36m[K^~~~~~~~~[m[K
+                      [32m[Kreadlinkat[m[K
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_resting_roll_thrust_controller.cpp:[m[K In function ‘[01m[Kvoid StateMachine()[m[K’:
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_resting_roll_thrust_controller.cpp:396:79:[m[K [01;31m[Kerror: [m[K‘[01m[Kthrust[m[K’ was not declared in this scope
+  cout << "THRUST: " << current_thrust << " [N]. Energy minimized: " << 100*(1-[01;31m[Kthrust[m[K/hovering_thrust) << "%" << endl;
+                                                                               [01;31m[K^~~~~~[m[K
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_resting_roll_thrust_controller.cpp:396:79:[m[K [01;36m[Knote: [m[Ksuggested alternative: ‘[01m[Kchroot[m[K’
+  cout << "THRUST: " << current_thrust << " [N]. Energy minimized: " << 100*(1-[01;36m[Kthrust[m[K/hovering_thrust) << "%" << endl;
+                                                                               [01;36m[K^~~~~~[m[K
+                                                                               [32m[Kchroot[m[K
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_resting_roll_thrust_controller.cpp:[m[K In function ‘[01m[Kvoid HomePosition()[m[K’:
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_resting_roll_thrust_controller.cpp:439:20:[m[K [01;31m[Kerror: [m[K‘[01m[Kthrust[m[K’ was not declared in this scope
+  hovering_thrust = [01;31m[Kthrust[m[K;
+                    [01;31m[K^~~~~~[m[K
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_resting_roll_thrust_controller.cpp:439:20:[m[K [01;36m[Knote: [m[Ksuggested alternative: ‘[01m[Kchroot[m[K’
+  hovering_thrust = [01;36m[Kthrust[m[K;
+                    [01;36m[K^~~~~~[m[K
+                    [32m[Kchroot[m[K
+make[2]: *** [CMakeFiles/high_level_resting_roll_thrust_controller.dir/src/nodes/high_level_resting_roll_thrust_controller.cpp.o] Error 1
+make[1]: *** [CMakeFiles/high_level_resting_roll_thrust_controller.dir/all] Error 2
+make: *** [all] Error 2

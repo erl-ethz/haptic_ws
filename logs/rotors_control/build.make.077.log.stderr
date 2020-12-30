@@ -1,0 +1,11 @@
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_resting_controller.cpp:[m[K In function ‘[01m[Kvoid StateMachine()[m[K’:
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_resting_controller.cpp:385:49:[m[K [01;31m[Kerror: [m[K‘[01m[KMAX_LATERAL_SLIDING[m[K’ was not declared in this scope
+    ControlStrategy(pushing_effort*lateral_slide/[01;31m[KMAX_LATERAL_SLIDING[m[K, sign*desired_heading);
+                                                 [01;31m[K^~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_resting_controller.cpp:385:49:[m[K [01;36m[Knote: [m[Ksuggested alternative: ‘[01m[KMIN_LATERAL_SLIDING[m[K’
+    ControlStrategy(pushing_effort*lateral_slide/[01;36m[KMAX_LATERAL_SLIDING[m[K, sign*desired_heading);
+                                                 [01;36m[K^~~~~~~~~~~~~~~~~~~[m[K
+                                                 [32m[KMIN_LATERAL_SLIDING[m[K
+make[2]: *** [CMakeFiles/high_level_resting_controller.dir/src/nodes/high_level_resting_controller.cpp.o] Error 1
+make[1]: *** [CMakeFiles/high_level_resting_controller.dir/all] Error 2
+make: *** [all] Error 2

@@ -1,0 +1,8 @@
+prefix=/home/emanuele/catkin_ws/devel/.private/rotors_description
+
+Name: rotors_description
+Description: Description of rotors_description
+Version: 6.0.8
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

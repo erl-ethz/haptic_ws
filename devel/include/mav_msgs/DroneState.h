@@ -1,0 +1,1 @@
+/home/emanuele/catkin_ws/devel/.private/mav_msgs/include/mav_msgs/DroneState.h

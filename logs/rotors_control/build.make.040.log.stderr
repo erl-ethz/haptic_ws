@@ -1,0 +1,10 @@
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_resting_controller.cpp:[m[K In function ‘[01m[Kvoid HomePosition()[m[K’:
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_resting_controller.cpp:419:2:[m[K [01;31m[Kerror: [m[Kexpected ‘[01m[K;[m[K’ before ‘[01m[Kpos_msg[m[K’
+  [01;31m[Kpos_msg[m[K.header.stamp = ros::Time::now();
+  [01;31m[K^~~~~~~[m[K
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_resting_controller.cpp:427:2:[m[K [01;31m[Kerror: [m[Kexpected ‘[01m[K;[m[K’ before ‘[01m[Kpos_msg[m[K’
+  [01;31m[Kpos_msg[m[K.header.stamp = ros::Time::now();
+  [01;31m[K^~~~~~~[m[K
+make[2]: *** [CMakeFiles/high_level_resting_controller.dir/src/nodes/high_level_resting_controller.cpp.o] Error 1
+make[1]: *** [CMakeFiles/high_level_resting_controller.dir/all] Error 2
+make: *** [all] Error 2

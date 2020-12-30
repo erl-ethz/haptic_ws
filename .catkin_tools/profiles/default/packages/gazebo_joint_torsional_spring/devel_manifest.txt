@@ -1,0 +1,6 @@
+gazebo_joint_torsional_spring
+/home/emanuele/catkin_ws/devel/.private/gazebo_joint_torsional_spring/cmake.lock /home/emanuele/catkin_ws/devel/./cmake.lock
+/home/emanuele/catkin_ws/devel/.private/gazebo_joint_torsional_spring/share/gazebo_joint_torsional_spring/cmake/gazebo_joint_torsional_springConfig.cmake /home/emanuele/catkin_ws/devel/share/gazebo_joint_torsional_spring/cmake/gazebo_joint_torsional_springConfig.cmake
+/home/emanuele/catkin_ws/devel/.private/gazebo_joint_torsional_spring/share/gazebo_joint_torsional_spring/cmake/gazebo_joint_torsional_springConfig-version.cmake /home/emanuele/catkin_ws/devel/share/gazebo_joint_torsional_spring/cmake/gazebo_joint_torsional_springConfig-version.cmake
+/home/emanuele/catkin_ws/devel/.private/gazebo_joint_torsional_spring/lib/libjoint_torsional_spring_plugin.so /home/emanuele/catkin_ws/devel/lib/libjoint_torsional_spring_plugin.so
+/home/emanuele/catkin_ws/devel/.private/gazebo_joint_torsional_spring/lib/pkgconfig/gazebo_joint_torsional_spring.pc /home/emanuele/catkin_ws/devel/lib/pkgconfig/gazebo_joint_torsional_spring.pc

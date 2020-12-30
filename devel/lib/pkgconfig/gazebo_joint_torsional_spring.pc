@@ -1,0 +1,1 @@
+/home/emanuele/catkin_ws/devel/.private/gazebo_joint_torsional_spring/lib/pkgconfig/gazebo_joint_torsional_spring.pc

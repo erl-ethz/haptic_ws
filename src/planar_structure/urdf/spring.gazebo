@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<robot>
+
+  <!-- Macro for Torsional Joint Spring Plugin -->
+  <gazebo>
+    <plugin name="joint_spring" filename="libgazebo_joint_torsional_spring.so">
+      <kx>50</kx>
+      <set_point>0.5</set_point>
+      <joint>branch_joint</joint>
+    </plugin>
+  </gazebo>
+ 
+</robot>

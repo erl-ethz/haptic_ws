@@ -1,0 +1,25 @@
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_resting_controller.cpp:[m[K In function ‘[01m[Kint main(int, char**)[m[K’:
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_resting_controller.cpp:419:19:[m[K [01;31m[Kerror: [m[K‘[01m[Kdesired_roll[m[K’ was not declared in this scope
+     << (180/M_PI)*[01;31m[Kdesired_roll[m[K       << ", "
+                   [01;31m[K^~~~~~~~~~~~[m[K
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_resting_controller.cpp:419:19:[m[K [01;36m[Knote: [m[Ksuggested alternative: ‘[01m[Kdesired_heading[m[K’
+     << (180/M_PI)*[01;36m[Kdesired_roll[m[K       << ", "
+                   [01;36m[K^~~~~~~~~~~~[m[K
+                   [32m[Kdesired_heading[m[K
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_resting_controller.cpp:420:19:[m[K [01;31m[Kerror: [m[K‘[01m[Kcommanded_roll[m[K’ was not declared in this scope
+     << (180/M_PI)*[01;31m[Kcommanded_roll[m[K     << ", "
+                   [01;31m[K^~~~~~~~~~~~~~[m[K
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_resting_controller.cpp:420:19:[m[K [01;36m[Knote: [m[Ksuggested alternative: ‘[01m[Kcommanded_heading[m[K’
+     << (180/M_PI)*[01;36m[Kcommanded_roll[m[K     << ", "
+                   [01;36m[K^~~~~~~~~~~~~~[m[K
+                   [32m[Kcommanded_heading[m[K
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_resting_controller.cpp:433:17:[m[K [01;31m[Kerror: [m[K‘[01m[KLIMIT_HEIGHT[m[K’ was not declared in this scope
+    if(pos[2] >= [01;31m[KLIMIT_HEIGHT[m[K)
+                 [01;31m[K^~~~~~~~~~~~[m[K
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_resting_controller.cpp:433:17:[m[K [01;36m[Knote: [m[Ksuggested alternative: ‘[01m[K_IO_RIGHT[m[K’
+    if(pos[2] >= [01;36m[KLIMIT_HEIGHT[m[K)
+                 [01;36m[K^~~~~~~~~~~~[m[K
+                 [32m[K_IO_RIGHT[m[K
+make[2]: *** [CMakeFiles/high_level_resting_controller.dir/src/nodes/high_level_resting_controller.cpp.o] Error 1
+make[1]: *** [CMakeFiles/high_level_resting_controller.dir/all] Error 2
+make: *** [all] Error 2

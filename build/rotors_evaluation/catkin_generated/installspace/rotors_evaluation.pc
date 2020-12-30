@@ -1,0 +1,8 @@
+prefix=/home/emanuele/catkin_ws/install
+
+Name: rotors_evaluation
+Description: Description of rotors_evaluation
+Version: 6.0.8
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

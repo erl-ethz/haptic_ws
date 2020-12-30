@@ -1,0 +1,6 @@
+CrazyS/rotors_evaluation
+/home/emanuele/catkin_ws/devel/.private/rotors_evaluation/cmake.lock /home/emanuele/catkin_ws/devel/./cmake.lock
+/home/emanuele/catkin_ws/devel/.private/rotors_evaluation/share/rotors_evaluation/cmake/rotors_evaluationConfig-version.cmake /home/emanuele/catkin_ws/devel/share/rotors_evaluation/cmake/rotors_evaluationConfig-version.cmake
+/home/emanuele/catkin_ws/devel/.private/rotors_evaluation/share/rotors_evaluation/cmake/rotors_evaluationConfig.cmake /home/emanuele/catkin_ws/devel/share/rotors_evaluation/cmake/rotors_evaluationConfig.cmake
+/home/emanuele/catkin_ws/devel/.private/rotors_evaluation/lib/python2.7/dist-packages/rosbag_tools/__init__.py /home/emanuele/catkin_ws/devel/lib/python2.7/dist-packages/rosbag_tools/__init__.py
+/home/emanuele/catkin_ws/devel/.private/rotors_evaluation/lib/pkgconfig/rotors_evaluation.pc /home/emanuele/catkin_ws/devel/lib/pkgconfig/rotors_evaluation.pc

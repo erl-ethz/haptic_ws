@@ -1,0 +1,11 @@
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_resting_controller.cpp:[m[K In function ‘[01m[Kvoid StateMachine()[m[K’:
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_resting_controller.cpp:332:139:[m[K [01;31m[Kerror: [m[K‘[01m[Ksliding[m[K’ was not declared in this scope
+  else if((fabs(ft_filtered_msg.force.y) > MIN_LATERAL_FORCE_THRESHOLD && fabs(ft_filtered_msg.force.y) < MAX_LATERAL_FORCE_THRESHOLD) && ![01;31m[Ksliding[m[K)
+                                                                                                                                           [01;31m[K^~~~~~~[m[K
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_resting_controller.cpp:332:139:[m[K [01;36m[Knote: [m[Ksuggested alternative: ‘[01m[Kstdin[m[K’
+  else if((fabs(ft_filtered_msg.force.y) > MIN_LATERAL_FORCE_THRESHOLD && fabs(ft_filtered_msg.force.y) < MAX_LATERAL_FORCE_THRESHOLD) && ![01;36m[Ksliding[m[K)
+                                                                                                                                           [01;36m[K^~~~~~~[m[K
+                                                                                                                                           [32m[Kstdin[m[K
+make[2]: *** [CMakeFiles/high_level_resting_controller.dir/src/nodes/high_level_resting_controller.cpp.o] Error 1
+make[1]: *** [CMakeFiles/high_level_resting_controller.dir/all] Error 2
+make: *** [all] Error 2
