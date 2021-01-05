@@ -168,17 +168,43 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named high_level_2D_position_controller
+# Target rules for targets named high_level_3D_resting_waypoint_controller
 
 # Build rule for target.
-high_level_2D_position_controller: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 high_level_2D_position_controller
-.PHONY : high_level_2D_position_controller
+high_level_3D_resting_waypoint_controller: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 high_level_3D_resting_waypoint_controller
+.PHONY : high_level_3D_resting_waypoint_controller
 
 # fast build rule for target.
-high_level_2D_position_controller/fast:
-	$(MAKE) -f CMakeFiles/high_level_2D_position_controller.dir/build.make CMakeFiles/high_level_2D_position_controller.dir/build
-.PHONY : high_level_2D_position_controller/fast
+high_level_3D_resting_waypoint_controller/fast:
+	$(MAKE) -f CMakeFiles/high_level_3D_resting_waypoint_controller.dir/build.make CMakeFiles/high_level_3D_resting_waypoint_controller.dir/build
+.PHONY : high_level_3D_resting_waypoint_controller/fast
+
+#=============================================================================
+# Target rules for targets named high_level_2D_resting_roll_thrust_controller
+
+# Build rule for target.
+high_level_2D_resting_roll_thrust_controller: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 high_level_2D_resting_roll_thrust_controller
+.PHONY : high_level_2D_resting_roll_thrust_controller
+
+# fast build rule for target.
+high_level_2D_resting_roll_thrust_controller/fast:
+	$(MAKE) -f CMakeFiles/high_level_2D_resting_roll_thrust_controller.dir/build.make CMakeFiles/high_level_2D_resting_roll_thrust_controller.dir/build
+.PHONY : high_level_2D_resting_roll_thrust_controller/fast
+
+#=============================================================================
+# Target rules for targets named high_level_2D_push_slide_waypoint_controller
+
+# Build rule for target.
+high_level_2D_push_slide_waypoint_controller: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 high_level_2D_push_slide_waypoint_controller
+.PHONY : high_level_2D_push_slide_waypoint_controller
+
+# fast build rule for target.
+high_level_2D_push_slide_waypoint_controller/fast:
+	$(MAKE) -f CMakeFiles/high_level_2D_push_slide_waypoint_controller.dir/build.make CMakeFiles/high_level_2D_push_slide_waypoint_controller.dir/build
+.PHONY : high_level_2D_push_slide_waypoint_controller/fast
 
 #=============================================================================
 # Target rules for targets named roll_pitch_yawrate_thrust_crazyflie_node
@@ -350,6 +376,19 @@ rosgraph_msgs_generate_messages_py/fast:
 .PHONY : rosgraph_msgs_generate_messages_py/fast
 
 #=============================================================================
+# Target rules for targets named high_level_2D_push_slide_roll_thrust_controller
+
+# Build rule for target.
+high_level_2D_push_slide_roll_thrust_controller: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 high_level_2D_push_slide_roll_thrust_controller
+.PHONY : high_level_2D_push_slide_roll_thrust_controller
+
+# fast build rule for target.
+high_level_2D_push_slide_roll_thrust_controller/fast:
+	$(MAKE) -f CMakeFiles/high_level_2D_push_slide_roll_thrust_controller.dir/build.make CMakeFiles/high_level_2D_push_slide_roll_thrust_controller.dir/build
+.PHONY : high_level_2D_push_slide_roll_thrust_controller/fast
+
+#=============================================================================
 # Target rules for targets named rosgraph_msgs_generate_messages_nodejs
 
 # Build rule for target.
@@ -439,19 +478,6 @@ nav_msgs_generate_messages_py: cmake_check_build_system
 nav_msgs_generate_messages_py/fast:
 	$(MAKE) -f CMakeFiles/nav_msgs_generate_messages_py.dir/build.make CMakeFiles/nav_msgs_generate_messages_py.dir/build
 .PHONY : nav_msgs_generate_messages_py/fast
-
-#=============================================================================
-# Target rules for targets named high_level_resting_roll_thrust_controller
-
-# Build rule for target.
-high_level_resting_roll_thrust_controller: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 high_level_resting_roll_thrust_controller
-.PHONY : high_level_resting_roll_thrust_controller
-
-# fast build rule for target.
-high_level_resting_roll_thrust_controller/fast:
-	$(MAKE) -f CMakeFiles/high_level_resting_roll_thrust_controller.dir/build.make CMakeFiles/high_level_resting_roll_thrust_controller.dir/build
-.PHONY : high_level_resting_roll_thrust_controller/fast
 
 #=============================================================================
 # Target rules for targets named std_msgs_generate_messages_nodejs
@@ -714,6 +740,19 @@ nav_msgs_generate_messages_lisp/fast:
 .PHONY : nav_msgs_generate_messages_lisp/fast
 
 #=============================================================================
+# Target rules for targets named high_level_2D_resting_waypoint_controller
+
+# Build rule for target.
+high_level_2D_resting_waypoint_controller: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 high_level_2D_resting_waypoint_controller
+.PHONY : high_level_2D_resting_waypoint_controller
+
+# fast build rule for target.
+high_level_2D_resting_waypoint_controller/fast:
+	$(MAKE) -f CMakeFiles/high_level_2D_resting_waypoint_controller.dir/build.make CMakeFiles/high_level_2D_resting_waypoint_controller.dir/build
+.PHONY : high_level_2D_resting_waypoint_controller/fast
+
+#=============================================================================
 # Target rules for targets named geometry_msgs_generate_messages_nodejs
 
 # Build rule for target.
@@ -738,19 +777,6 @@ clean_test_results: cmake_check_build_system
 clean_test_results/fast:
 	$(MAKE) -f CMakeFiles/clean_test_results.dir/build.make CMakeFiles/clean_test_results.dir/build
 .PHONY : clean_test_results/fast
-
-#=============================================================================
-# Target rules for targets named high_level_resting_controller
-
-# Build rule for target.
-high_level_resting_controller: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 high_level_resting_controller
-.PHONY : high_level_resting_controller
-
-# fast build rule for target.
-high_level_resting_controller/fast:
-	$(MAKE) -f CMakeFiles/high_level_resting_controller.dir/build.make CMakeFiles/high_level_resting_controller.dir/build
-.PHONY : high_level_resting_controller/fast
 
 #=============================================================================
 # Target rules for targets named trajectory_msgs_generate_messages_nodejs
@@ -894,19 +920,6 @@ mav_msgs_generate_messages_py: cmake_check_build_system
 mav_msgs_generate_messages_py/fast:
 	$(MAKE) -f CMakeFiles/mav_msgs_generate_messages_py.dir/build.make CMakeFiles/mav_msgs_generate_messages_py.dir/build
 .PHONY : mav_msgs_generate_messages_py/fast
-
-#=============================================================================
-# Target rules for targets named high_level_2D_roll_thrust_controller
-
-# Build rule for target.
-high_level_2D_roll_thrust_controller: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 high_level_2D_roll_thrust_controller
-.PHONY : high_level_2D_roll_thrust_controller
-
-# fast build rule for target.
-high_level_2D_roll_thrust_controller/fast:
-	$(MAKE) -f CMakeFiles/high_level_2D_roll_thrust_controller.dir/build.make CMakeFiles/high_level_2D_roll_thrust_controller.dir/build
-.PHONY : high_level_2D_roll_thrust_controller/fast
 
 #=============================================================================
 # Target rules for targets named trajectory_msgs_generate_messages_cpp
@@ -1333,113 +1346,140 @@ src/library/sensfusion6.cpp.s:
 	$(MAKE) -f CMakeFiles/sensfusion6.dir/build.make CMakeFiles/sensfusion6.dir/src/library/sensfusion6.cpp.s
 .PHONY : src/library/sensfusion6.cpp.s
 
-src/nodes/high_level_2D_position_controller.o: src/nodes/high_level_2D_position_controller.cpp.o
+src/nodes/high_level_2D_push_slide_roll_thrust_controller.o: src/nodes/high_level_2D_push_slide_roll_thrust_controller.cpp.o
 
-.PHONY : src/nodes/high_level_2D_position_controller.o
-
-# target to build an object file
-src/nodes/high_level_2D_position_controller.cpp.o:
-	$(MAKE) -f CMakeFiles/high_level_2D_position_controller.dir/build.make CMakeFiles/high_level_2D_position_controller.dir/src/nodes/high_level_2D_position_controller.cpp.o
-.PHONY : src/nodes/high_level_2D_position_controller.cpp.o
-
-src/nodes/high_level_2D_position_controller.i: src/nodes/high_level_2D_position_controller.cpp.i
-
-.PHONY : src/nodes/high_level_2D_position_controller.i
-
-# target to preprocess a source file
-src/nodes/high_level_2D_position_controller.cpp.i:
-	$(MAKE) -f CMakeFiles/high_level_2D_position_controller.dir/build.make CMakeFiles/high_level_2D_position_controller.dir/src/nodes/high_level_2D_position_controller.cpp.i
-.PHONY : src/nodes/high_level_2D_position_controller.cpp.i
-
-src/nodes/high_level_2D_position_controller.s: src/nodes/high_level_2D_position_controller.cpp.s
-
-.PHONY : src/nodes/high_level_2D_position_controller.s
-
-# target to generate assembly for a file
-src/nodes/high_level_2D_position_controller.cpp.s:
-	$(MAKE) -f CMakeFiles/high_level_2D_position_controller.dir/build.make CMakeFiles/high_level_2D_position_controller.dir/src/nodes/high_level_2D_position_controller.cpp.s
-.PHONY : src/nodes/high_level_2D_position_controller.cpp.s
-
-src/nodes/high_level_2D_roll_thrust_controller.o: src/nodes/high_level_2D_roll_thrust_controller.cpp.o
-
-.PHONY : src/nodes/high_level_2D_roll_thrust_controller.o
+.PHONY : src/nodes/high_level_2D_push_slide_roll_thrust_controller.o
 
 # target to build an object file
-src/nodes/high_level_2D_roll_thrust_controller.cpp.o:
-	$(MAKE) -f CMakeFiles/high_level_2D_roll_thrust_controller.dir/build.make CMakeFiles/high_level_2D_roll_thrust_controller.dir/src/nodes/high_level_2D_roll_thrust_controller.cpp.o
-.PHONY : src/nodes/high_level_2D_roll_thrust_controller.cpp.o
+src/nodes/high_level_2D_push_slide_roll_thrust_controller.cpp.o:
+	$(MAKE) -f CMakeFiles/high_level_2D_push_slide_roll_thrust_controller.dir/build.make CMakeFiles/high_level_2D_push_slide_roll_thrust_controller.dir/src/nodes/high_level_2D_push_slide_roll_thrust_controller.cpp.o
+.PHONY : src/nodes/high_level_2D_push_slide_roll_thrust_controller.cpp.o
 
-src/nodes/high_level_2D_roll_thrust_controller.i: src/nodes/high_level_2D_roll_thrust_controller.cpp.i
+src/nodes/high_level_2D_push_slide_roll_thrust_controller.i: src/nodes/high_level_2D_push_slide_roll_thrust_controller.cpp.i
 
-.PHONY : src/nodes/high_level_2D_roll_thrust_controller.i
+.PHONY : src/nodes/high_level_2D_push_slide_roll_thrust_controller.i
 
 # target to preprocess a source file
-src/nodes/high_level_2D_roll_thrust_controller.cpp.i:
-	$(MAKE) -f CMakeFiles/high_level_2D_roll_thrust_controller.dir/build.make CMakeFiles/high_level_2D_roll_thrust_controller.dir/src/nodes/high_level_2D_roll_thrust_controller.cpp.i
-.PHONY : src/nodes/high_level_2D_roll_thrust_controller.cpp.i
+src/nodes/high_level_2D_push_slide_roll_thrust_controller.cpp.i:
+	$(MAKE) -f CMakeFiles/high_level_2D_push_slide_roll_thrust_controller.dir/build.make CMakeFiles/high_level_2D_push_slide_roll_thrust_controller.dir/src/nodes/high_level_2D_push_slide_roll_thrust_controller.cpp.i
+.PHONY : src/nodes/high_level_2D_push_slide_roll_thrust_controller.cpp.i
 
-src/nodes/high_level_2D_roll_thrust_controller.s: src/nodes/high_level_2D_roll_thrust_controller.cpp.s
+src/nodes/high_level_2D_push_slide_roll_thrust_controller.s: src/nodes/high_level_2D_push_slide_roll_thrust_controller.cpp.s
 
-.PHONY : src/nodes/high_level_2D_roll_thrust_controller.s
+.PHONY : src/nodes/high_level_2D_push_slide_roll_thrust_controller.s
 
 # target to generate assembly for a file
-src/nodes/high_level_2D_roll_thrust_controller.cpp.s:
-	$(MAKE) -f CMakeFiles/high_level_2D_roll_thrust_controller.dir/build.make CMakeFiles/high_level_2D_roll_thrust_controller.dir/src/nodes/high_level_2D_roll_thrust_controller.cpp.s
-.PHONY : src/nodes/high_level_2D_roll_thrust_controller.cpp.s
+src/nodes/high_level_2D_push_slide_roll_thrust_controller.cpp.s:
+	$(MAKE) -f CMakeFiles/high_level_2D_push_slide_roll_thrust_controller.dir/build.make CMakeFiles/high_level_2D_push_slide_roll_thrust_controller.dir/src/nodes/high_level_2D_push_slide_roll_thrust_controller.cpp.s
+.PHONY : src/nodes/high_level_2D_push_slide_roll_thrust_controller.cpp.s
 
-src/nodes/high_level_resting_controller.o: src/nodes/high_level_resting_controller.cpp.o
+src/nodes/high_level_2D_push_slide_waypoint_controller.o: src/nodes/high_level_2D_push_slide_waypoint_controller.cpp.o
 
-.PHONY : src/nodes/high_level_resting_controller.o
+.PHONY : src/nodes/high_level_2D_push_slide_waypoint_controller.o
 
 # target to build an object file
-src/nodes/high_level_resting_controller.cpp.o:
-	$(MAKE) -f CMakeFiles/high_level_resting_controller.dir/build.make CMakeFiles/high_level_resting_controller.dir/src/nodes/high_level_resting_controller.cpp.o
-.PHONY : src/nodes/high_level_resting_controller.cpp.o
+src/nodes/high_level_2D_push_slide_waypoint_controller.cpp.o:
+	$(MAKE) -f CMakeFiles/high_level_2D_push_slide_waypoint_controller.dir/build.make CMakeFiles/high_level_2D_push_slide_waypoint_controller.dir/src/nodes/high_level_2D_push_slide_waypoint_controller.cpp.o
+.PHONY : src/nodes/high_level_2D_push_slide_waypoint_controller.cpp.o
 
-src/nodes/high_level_resting_controller.i: src/nodes/high_level_resting_controller.cpp.i
+src/nodes/high_level_2D_push_slide_waypoint_controller.i: src/nodes/high_level_2D_push_slide_waypoint_controller.cpp.i
 
-.PHONY : src/nodes/high_level_resting_controller.i
+.PHONY : src/nodes/high_level_2D_push_slide_waypoint_controller.i
 
 # target to preprocess a source file
-src/nodes/high_level_resting_controller.cpp.i:
-	$(MAKE) -f CMakeFiles/high_level_resting_controller.dir/build.make CMakeFiles/high_level_resting_controller.dir/src/nodes/high_level_resting_controller.cpp.i
-.PHONY : src/nodes/high_level_resting_controller.cpp.i
+src/nodes/high_level_2D_push_slide_waypoint_controller.cpp.i:
+	$(MAKE) -f CMakeFiles/high_level_2D_push_slide_waypoint_controller.dir/build.make CMakeFiles/high_level_2D_push_slide_waypoint_controller.dir/src/nodes/high_level_2D_push_slide_waypoint_controller.cpp.i
+.PHONY : src/nodes/high_level_2D_push_slide_waypoint_controller.cpp.i
 
-src/nodes/high_level_resting_controller.s: src/nodes/high_level_resting_controller.cpp.s
+src/nodes/high_level_2D_push_slide_waypoint_controller.s: src/nodes/high_level_2D_push_slide_waypoint_controller.cpp.s
 
-.PHONY : src/nodes/high_level_resting_controller.s
+.PHONY : src/nodes/high_level_2D_push_slide_waypoint_controller.s
 
 # target to generate assembly for a file
-src/nodes/high_level_resting_controller.cpp.s:
-	$(MAKE) -f CMakeFiles/high_level_resting_controller.dir/build.make CMakeFiles/high_level_resting_controller.dir/src/nodes/high_level_resting_controller.cpp.s
-.PHONY : src/nodes/high_level_resting_controller.cpp.s
+src/nodes/high_level_2D_push_slide_waypoint_controller.cpp.s:
+	$(MAKE) -f CMakeFiles/high_level_2D_push_slide_waypoint_controller.dir/build.make CMakeFiles/high_level_2D_push_slide_waypoint_controller.dir/src/nodes/high_level_2D_push_slide_waypoint_controller.cpp.s
+.PHONY : src/nodes/high_level_2D_push_slide_waypoint_controller.cpp.s
 
-src/nodes/high_level_resting_roll_thrust_controller.o: src/nodes/high_level_resting_roll_thrust_controller.cpp.o
+src/nodes/high_level_2D_resting_roll_thrust_controller.o: src/nodes/high_level_2D_resting_roll_thrust_controller.cpp.o
 
-.PHONY : src/nodes/high_level_resting_roll_thrust_controller.o
+.PHONY : src/nodes/high_level_2D_resting_roll_thrust_controller.o
 
 # target to build an object file
-src/nodes/high_level_resting_roll_thrust_controller.cpp.o:
-	$(MAKE) -f CMakeFiles/high_level_resting_roll_thrust_controller.dir/build.make CMakeFiles/high_level_resting_roll_thrust_controller.dir/src/nodes/high_level_resting_roll_thrust_controller.cpp.o
-.PHONY : src/nodes/high_level_resting_roll_thrust_controller.cpp.o
+src/nodes/high_level_2D_resting_roll_thrust_controller.cpp.o:
+	$(MAKE) -f CMakeFiles/high_level_2D_resting_roll_thrust_controller.dir/build.make CMakeFiles/high_level_2D_resting_roll_thrust_controller.dir/src/nodes/high_level_2D_resting_roll_thrust_controller.cpp.o
+.PHONY : src/nodes/high_level_2D_resting_roll_thrust_controller.cpp.o
 
-src/nodes/high_level_resting_roll_thrust_controller.i: src/nodes/high_level_resting_roll_thrust_controller.cpp.i
+src/nodes/high_level_2D_resting_roll_thrust_controller.i: src/nodes/high_level_2D_resting_roll_thrust_controller.cpp.i
 
-.PHONY : src/nodes/high_level_resting_roll_thrust_controller.i
+.PHONY : src/nodes/high_level_2D_resting_roll_thrust_controller.i
 
 # target to preprocess a source file
-src/nodes/high_level_resting_roll_thrust_controller.cpp.i:
-	$(MAKE) -f CMakeFiles/high_level_resting_roll_thrust_controller.dir/build.make CMakeFiles/high_level_resting_roll_thrust_controller.dir/src/nodes/high_level_resting_roll_thrust_controller.cpp.i
-.PHONY : src/nodes/high_level_resting_roll_thrust_controller.cpp.i
+src/nodes/high_level_2D_resting_roll_thrust_controller.cpp.i:
+	$(MAKE) -f CMakeFiles/high_level_2D_resting_roll_thrust_controller.dir/build.make CMakeFiles/high_level_2D_resting_roll_thrust_controller.dir/src/nodes/high_level_2D_resting_roll_thrust_controller.cpp.i
+.PHONY : src/nodes/high_level_2D_resting_roll_thrust_controller.cpp.i
 
-src/nodes/high_level_resting_roll_thrust_controller.s: src/nodes/high_level_resting_roll_thrust_controller.cpp.s
+src/nodes/high_level_2D_resting_roll_thrust_controller.s: src/nodes/high_level_2D_resting_roll_thrust_controller.cpp.s
 
-.PHONY : src/nodes/high_level_resting_roll_thrust_controller.s
+.PHONY : src/nodes/high_level_2D_resting_roll_thrust_controller.s
 
 # target to generate assembly for a file
-src/nodes/high_level_resting_roll_thrust_controller.cpp.s:
-	$(MAKE) -f CMakeFiles/high_level_resting_roll_thrust_controller.dir/build.make CMakeFiles/high_level_resting_roll_thrust_controller.dir/src/nodes/high_level_resting_roll_thrust_controller.cpp.s
-.PHONY : src/nodes/high_level_resting_roll_thrust_controller.cpp.s
+src/nodes/high_level_2D_resting_roll_thrust_controller.cpp.s:
+	$(MAKE) -f CMakeFiles/high_level_2D_resting_roll_thrust_controller.dir/build.make CMakeFiles/high_level_2D_resting_roll_thrust_controller.dir/src/nodes/high_level_2D_resting_roll_thrust_controller.cpp.s
+.PHONY : src/nodes/high_level_2D_resting_roll_thrust_controller.cpp.s
+
+src/nodes/high_level_2D_resting_waypoint_controller.o: src/nodes/high_level_2D_resting_waypoint_controller.cpp.o
+
+.PHONY : src/nodes/high_level_2D_resting_waypoint_controller.o
+
+# target to build an object file
+src/nodes/high_level_2D_resting_waypoint_controller.cpp.o:
+	$(MAKE) -f CMakeFiles/high_level_2D_resting_waypoint_controller.dir/build.make CMakeFiles/high_level_2D_resting_waypoint_controller.dir/src/nodes/high_level_2D_resting_waypoint_controller.cpp.o
+.PHONY : src/nodes/high_level_2D_resting_waypoint_controller.cpp.o
+
+src/nodes/high_level_2D_resting_waypoint_controller.i: src/nodes/high_level_2D_resting_waypoint_controller.cpp.i
+
+.PHONY : src/nodes/high_level_2D_resting_waypoint_controller.i
+
+# target to preprocess a source file
+src/nodes/high_level_2D_resting_waypoint_controller.cpp.i:
+	$(MAKE) -f CMakeFiles/high_level_2D_resting_waypoint_controller.dir/build.make CMakeFiles/high_level_2D_resting_waypoint_controller.dir/src/nodes/high_level_2D_resting_waypoint_controller.cpp.i
+.PHONY : src/nodes/high_level_2D_resting_waypoint_controller.cpp.i
+
+src/nodes/high_level_2D_resting_waypoint_controller.s: src/nodes/high_level_2D_resting_waypoint_controller.cpp.s
+
+.PHONY : src/nodes/high_level_2D_resting_waypoint_controller.s
+
+# target to generate assembly for a file
+src/nodes/high_level_2D_resting_waypoint_controller.cpp.s:
+	$(MAKE) -f CMakeFiles/high_level_2D_resting_waypoint_controller.dir/build.make CMakeFiles/high_level_2D_resting_waypoint_controller.dir/src/nodes/high_level_2D_resting_waypoint_controller.cpp.s
+.PHONY : src/nodes/high_level_2D_resting_waypoint_controller.cpp.s
+
+src/nodes/high_level_3D_resting_waypoint_controller.o: src/nodes/high_level_3D_resting_waypoint_controller.cpp.o
+
+.PHONY : src/nodes/high_level_3D_resting_waypoint_controller.o
+
+# target to build an object file
+src/nodes/high_level_3D_resting_waypoint_controller.cpp.o:
+	$(MAKE) -f CMakeFiles/high_level_3D_resting_waypoint_controller.dir/build.make CMakeFiles/high_level_3D_resting_waypoint_controller.dir/src/nodes/high_level_3D_resting_waypoint_controller.cpp.o
+.PHONY : src/nodes/high_level_3D_resting_waypoint_controller.cpp.o
+
+src/nodes/high_level_3D_resting_waypoint_controller.i: src/nodes/high_level_3D_resting_waypoint_controller.cpp.i
+
+.PHONY : src/nodes/high_level_3D_resting_waypoint_controller.i
+
+# target to preprocess a source file
+src/nodes/high_level_3D_resting_waypoint_controller.cpp.i:
+	$(MAKE) -f CMakeFiles/high_level_3D_resting_waypoint_controller.dir/build.make CMakeFiles/high_level_3D_resting_waypoint_controller.dir/src/nodes/high_level_3D_resting_waypoint_controller.cpp.i
+.PHONY : src/nodes/high_level_3D_resting_waypoint_controller.cpp.i
+
+src/nodes/high_level_3D_resting_waypoint_controller.s: src/nodes/high_level_3D_resting_waypoint_controller.cpp.s
+
+.PHONY : src/nodes/high_level_3D_resting_waypoint_controller.s
+
+# target to generate assembly for a file
+src/nodes/high_level_3D_resting_waypoint_controller.cpp.s:
+	$(MAKE) -f CMakeFiles/high_level_3D_resting_waypoint_controller.dir/build.make CMakeFiles/high_level_3D_resting_waypoint_controller.dir/src/nodes/high_level_3D_resting_waypoint_controller.cpp.s
+.PHONY : src/nodes/high_level_3D_resting_waypoint_controller.cpp.s
 
 src/nodes/lee_position_controller_node.o: src/nodes/lee_position_controller_node.cpp.o
 
@@ -1558,7 +1598,9 @@ help:
 	@echo "... install/strip"
 	@echo "... list_install_components"
 	@echo "... test"
-	@echo "... high_level_2D_position_controller"
+	@echo "... high_level_3D_resting_waypoint_controller"
+	@echo "... high_level_2D_resting_roll_thrust_controller"
+	@echo "... high_level_2D_push_slide_waypoint_controller"
 	@echo "... roll_pitch_yawrate_thrust_crazyflie_node"
 	@echo "... position_controller_node"
 	@echo "... roll_pitch_yawrate_thrust_controller_node"
@@ -1572,6 +1614,7 @@ help:
 	@echo "... sensor_msgs_generate_messages_cpp"
 	@echo "... lee_position_controller"
 	@echo "... rosgraph_msgs_generate_messages_py"
+	@echo "... high_level_2D_push_slide_roll_thrust_controller"
 	@echo "... rosgraph_msgs_generate_messages_nodejs"
 	@echo "... rosgraph_msgs_generate_messages_lisp"
 	@echo "... rosgraph_msgs_generate_messages_eus"
@@ -1580,7 +1623,6 @@ help:
 	@echo "... std_msgs_generate_messages_py"
 	@echo "... install"
 	@echo "... nav_msgs_generate_messages_py"
-	@echo "... high_level_resting_roll_thrust_controller"
 	@echo "... std_msgs_generate_messages_nodejs"
 	@echo "... std_msgs_generate_messages_lisp"
 	@echo "... actionlib_msgs_generate_messages_lisp"
@@ -1603,9 +1645,9 @@ help:
 	@echo "... nav_msgs_generate_messages_nodejs"
 	@echo "... edit_cache"
 	@echo "... nav_msgs_generate_messages_lisp"
+	@echo "... high_level_2D_resting_waypoint_controller"
 	@echo "... geometry_msgs_generate_messages_nodejs"
 	@echo "... clean_test_results"
-	@echo "... high_level_resting_controller"
 	@echo "... trajectory_msgs_generate_messages_nodejs"
 	@echo "... install/local"
 	@echo "... sensor_msgs_generate_messages_lisp"
@@ -1618,7 +1660,6 @@ help:
 	@echo "... mav_msgs_generate_messages_nodejs"
 	@echo "... sensor_msgs_generate_messages_eus"
 	@echo "... mav_msgs_generate_messages_py"
-	@echo "... high_level_2D_roll_thrust_controller"
 	@echo "... trajectory_msgs_generate_messages_cpp"
 	@echo "... roscpp_generate_messages_py"
 	@echo "... trajectory_msgs_generate_messages_eus"
@@ -1660,18 +1701,21 @@ help:
 	@echo "... src/library/sensfusion6.o"
 	@echo "... src/library/sensfusion6.i"
 	@echo "... src/library/sensfusion6.s"
-	@echo "... src/nodes/high_level_2D_position_controller.o"
-	@echo "... src/nodes/high_level_2D_position_controller.i"
-	@echo "... src/nodes/high_level_2D_position_controller.s"
-	@echo "... src/nodes/high_level_2D_roll_thrust_controller.o"
-	@echo "... src/nodes/high_level_2D_roll_thrust_controller.i"
-	@echo "... src/nodes/high_level_2D_roll_thrust_controller.s"
-	@echo "... src/nodes/high_level_resting_controller.o"
-	@echo "... src/nodes/high_level_resting_controller.i"
-	@echo "... src/nodes/high_level_resting_controller.s"
-	@echo "... src/nodes/high_level_resting_roll_thrust_controller.o"
-	@echo "... src/nodes/high_level_resting_roll_thrust_controller.i"
-	@echo "... src/nodes/high_level_resting_roll_thrust_controller.s"
+	@echo "... src/nodes/high_level_2D_push_slide_roll_thrust_controller.o"
+	@echo "... src/nodes/high_level_2D_push_slide_roll_thrust_controller.i"
+	@echo "... src/nodes/high_level_2D_push_slide_roll_thrust_controller.s"
+	@echo "... src/nodes/high_level_2D_push_slide_waypoint_controller.o"
+	@echo "... src/nodes/high_level_2D_push_slide_waypoint_controller.i"
+	@echo "... src/nodes/high_level_2D_push_slide_waypoint_controller.s"
+	@echo "... src/nodes/high_level_2D_resting_roll_thrust_controller.o"
+	@echo "... src/nodes/high_level_2D_resting_roll_thrust_controller.i"
+	@echo "... src/nodes/high_level_2D_resting_roll_thrust_controller.s"
+	@echo "... src/nodes/high_level_2D_resting_waypoint_controller.o"
+	@echo "... src/nodes/high_level_2D_resting_waypoint_controller.i"
+	@echo "... src/nodes/high_level_2D_resting_waypoint_controller.s"
+	@echo "... src/nodes/high_level_3D_resting_waypoint_controller.o"
+	@echo "... src/nodes/high_level_3D_resting_waypoint_controller.i"
+	@echo "... src/nodes/high_level_3D_resting_waypoint_controller.s"
 	@echo "... src/nodes/lee_position_controller_node.o"
 	@echo "... src/nodes/lee_position_controller_node.i"
 	@echo "... src/nodes/lee_position_controller_node.s"

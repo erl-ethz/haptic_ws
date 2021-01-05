@@ -137,7 +137,7 @@
   </xacro:vertical_rotor>
 
   <!-- Include the force sensor -->
-  <xacro:include filename="$(find rotors_description)/urdf/nano17.urdf.xacro" />
+  <xacro:include filename="$(find rotors_description)/urdf/nano17_structure.urdf.xacro" />
   
   <!-- Include the cage -->
   <xacro:include filename="$(find rotors_description)/urdf/cage.urdf" />

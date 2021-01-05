@@ -67,5 +67,10 @@
     </link>
   </xacro:macro>
 
+  <xacro:macro name="m_link_virtual" params="name">
+    <link name="${name}">
+    </link>
+  </xacro:macro>
+
 </robot>
 

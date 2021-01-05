@@ -1,4 +1,0 @@
-CMake Error: The source directory "/home/emanuele/catkin_ws/src/gazebo_joint_torsional_spring" does not exist.
-Specify --help for usage, or press the help button on the CMake GUI.
-Makefile:1302: recipe for target 'cmake_check_build_system' failed
-make: *** [cmake_check_build_system] Error 1

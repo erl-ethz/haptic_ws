@@ -4,7 +4,7 @@
 	<!-- Include the force-torque-sensor model -->
 	<xacro:include filename="$(find rotors_description)/urdf/ft_sensor.urdf.xacro"/>
 
-	<xacro:ft_sensor parent="haptic_drone_with_structure/base_link" name="FT_sensor" type="nano17">
+	<xacro:ft_sensor parent="haptic_drone/base_link" name="FT_sensor" type="nano17">
 		<origin xyz="0 0 -0.02" rpy="0 0 0"/>
 	</xacro:ft_sensor>
 
