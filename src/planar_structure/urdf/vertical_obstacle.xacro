@@ -44,7 +44,7 @@
   <gazebo>
     <plugin name="joint_spring" filename="libjoint_torsional_spring_plugin.so">
       <kx>5</kx>
-      <set_point>-0.01</set_point>
+      <set_point>-0.02</set_point>
       <joint>branch_joint</joint>
     </plugin>
   </gazebo> 

@@ -36,7 +36,7 @@
 
 using namespace std;
 
-//////////////////// Global variables ////////////////////
+///////////////////////////////////////////// Global variables /////////////////////////////////////////////
 
 ofstream logFile;				  	// Log file to save test parameters
 
@@ -53,7 +53,7 @@ const int PUB_TIME = 1;				  	// New waypoint is published every 'PUB_TIME' seco
 Eigen::Vector3f raw_forces;
 Eigen::Vector3f raw_torques;
 double force_magnitude;
-const double MIN_LATERAL_FORCE_THRESHOLD  = 0.002; 	// [N]
+const double MIN_LATERAL_FORCE_THRESHOLD  = 0.005; 	// [N]
 const double MAX_LATERAL_FORCE_THRESHOLD  = 2.6;   	// [N]
 const double CAGE_WEIGHT_OFFSET           = 0.147;  	// [N]
 const double CAGE_RADIUS                  = 0.255;  	// [m]
@@ -99,32 +99,9 @@ bool contact_flag	    = false;
 // Estimated parameters
 double obstacle_inclination, friction_force, normal_force, mu;
 
-//////////////////// Functions ////////////////////
+bool obstacle_pos = false;
 
-// Unpause Gazebo simulation environment
-void UnpauseGazebo()
-{
-	std_srvs::Empty srv;
-	bool unpaused = ros::service::call("/gazebo/unpause_physics", srv);
-	unsigned int i = 0;
-
-	// Trying to unpause Gazebo for 10 seconds.
-	while (i <= 10 && !unpaused)
-	{
-		ROS_INFO("Wait for 1 second before trying to unpause Gazebo again.");
-		std::this_thread::sleep_for(std::chrono::seconds(1));
-		unpaused = ros::service::call("/gazebo/unpause_physics", srv);
-		++i;
-	}
-
-	if (!unpaused)
-		ROS_FATAL("Could not wake up Gazebo.");
-	else
-		ROS_INFO("Unpaused the Gazebo simulation.");
-
-	// Wait for 5 seconds to let the Gazebo GUI show up.
-  	ros::Duration(5.0).sleep();
-}
+///////////////////////////////////////////// Callbacks /////////////////////////////////////////////
 
 // Callback for drone position data acquisition from odometry sensor
 void positionCallback(const geometry_msgs::PointStamped::ConstPtr& position_msg)
@@ -160,6 +137,33 @@ void forceTorqueSensorCallback(const geometry_msgs::WrenchStamped::ConstPtr& ft_
 	raw_torques[0] = ft_msg->wrench.torque.x;
 	raw_torques[1] = ft_msg->wrench.torque.y;
 	raw_torques[2] = ft_msg->wrench.torque.z;
+}
+
+///////////////////////////////////////////// Functions /////////////////////////////////////////////
+
+// Unpause Gazebo simulation environment
+void UnpauseGazebo()
+{
+	std_srvs::Empty srv;
+	bool unpaused = ros::service::call("/gazebo/unpause_physics", srv);
+	unsigned int i = 0;
+
+	// Trying to unpause Gazebo for 10 seconds.
+	while (i <= 10 && !unpaused)
+	{
+		ROS_INFO("Wait for 1 second before trying to unpause Gazebo again.");
+		std::this_thread::sleep_for(std::chrono::seconds(1));
+		unpaused = ros::service::call("/gazebo/unpause_physics", srv);
+		++i;
+	}
+
+	if (!unpaused)
+		ROS_FATAL("Could not wake up Gazebo.");
+	else
+		ROS_INFO("Unpaused the Gazebo simulation.");
+
+	// Wait for 5 seconds to let the Gazebo GUI show up.
+  	ros::Duration(5.0).sleep();
 }
 
 // Filtering force/torque sensor measurements
@@ -410,38 +414,80 @@ void StateMachine()
 // Reach home position above the resting spot and be ready for resting
 void HomePosition()
 {
-	pos_msg.header.stamp = ros::Time::now();
-	pos_msg.pose.position.x = pos[0];
-	pos_msg.pose.position.y = 0.0;
-	pos_msg.pose.position.z = 1.2;
-	pos_pub.publish(pos_msg);
+	if(obstacle_pos)
+	{
+		cout << "Obstacle on the right" << endl;
 
-	sleep(2);
-	ros::spinOnce();
+		pos_msg.header.stamp = ros::Time::now();
+		pos_msg.pose.position.x = pos[0];
+		pos_msg.pose.position.y = 0.0;
+		pos_msg.pose.position.z = 1.2;
+		pos_pub.publish(pos_msg);
 
-	pos_msg.header.stamp = ros::Time::now();
-	pos_msg.pose.position.x = pos[0];
-	pos_msg.pose.position.y = 0.0;
-	pos_msg.pose.position.z = 1.5;
-	pos_pub.publish(pos_msg);
+		sleep(2);
+		ros::spinOnce();
 
-	sleep(1);
-	ros::spinOnce();
+		pos_msg.header.stamp = ros::Time::now();
+		pos_msg.pose.position.x = pos[0];
+		pos_msg.pose.position.y = 0.0;
+		pos_msg.pose.position.z = 1.5;
+		pos_pub.publish(pos_msg);
 
-	pos_msg.header.stamp = ros::Time::now();
-	pos_msg.pose.position.x = pos[0];
-	pos_msg.pose.position.y = 0.0;
-	pos_msg.pose.position.z = 2.0;
-	pos_pub.publish(pos_msg);
+		sleep(1);
+		ros::spinOnce();
 
-	sleep(2);
-	ros::spinOnce();
+		pos_msg.header.stamp = ros::Time::now();
+		pos_msg.pose.position.x = pos[0];
+		pos_msg.pose.position.y = 0.0;
+		pos_msg.pose.position.z = 2.0;
+		pos_pub.publish(pos_msg);
 
-	pos_msg.header.stamp = ros::Time::now();
-	pos_msg.pose.position.x = pos[0];
-	pos_msg.pose.position.y = 1.2;
-	pos_msg.pose.position.z = 2.5;
-	pos_pub.publish(pos_msg);
+		sleep(2);
+		ros::spinOnce();
+
+		pos_msg.header.stamp = ros::Time::now();
+		pos_msg.pose.position.x = pos[0];
+		pos_msg.pose.position.y = 1.2;
+		pos_msg.pose.position.z = 2.5;
+		pos_pub.publish(pos_msg);
+	}
+	else
+	{
+		cout << "Obstacle on the left" << endl;
+
+		pos_msg.header.stamp = ros::Time::now();
+		pos_msg.pose.position.x = pos[0];
+		pos_msg.pose.position.y = 1.2;
+		pos_msg.pose.position.z = 1.2;
+		pos_pub.publish(pos_msg);
+
+		sleep(2);
+		ros::spinOnce();
+
+		pos_msg.header.stamp = ros::Time::now();
+		pos_msg.pose.position.x = pos[0];
+		pos_msg.pose.position.y = 1.2;
+		pos_msg.pose.position.z = 1.5;
+		pos_pub.publish(pos_msg);
+
+		sleep(1);
+		ros::spinOnce();
+
+		pos_msg.header.stamp = ros::Time::now();
+		pos_msg.pose.position.x = pos[0];
+		pos_msg.pose.position.y = 1.2;
+		pos_msg.pose.position.z = 2.0;
+		pos_pub.publish(pos_msg);
+
+		sleep(2);
+		ros::spinOnce();
+
+		pos_msg.header.stamp = ros::Time::now();
+		pos_msg.pose.position.x = pos[0];
+		pos_msg.pose.position.y = 0.4;
+		pos_msg.pose.position.z = 2.5;
+		pos_pub.publish(pos_msg);
+	}
 
 	sleep(7);
 	ros::spinOnce();
@@ -450,12 +496,15 @@ void HomePosition()
 	cout << "Home position reached. Hovering Thrust: " << hovering_thrust << " [N] " << endl;
 }
 
-// Main function
+///////////////////////////////////////////// Main function /////////////////////////////////////////////
 int main(int argc, char** argv)
 {
 	ros::init(argc, argv, "high_level_2D_resting_waypoint_controller");
 	ros::NodeHandle nh;
 	ros::Rate loop(100);
+
+	//obstacle_pos = true; 	// On the right
+	obstacle_pos = false;	// On the left
 
 	// Subscribers and Publishers 
 	pos_sub         = nh.subscribe("/haptic_drone_with_structure/odometry_sensor1/position", 10, &positionCallback);
@@ -475,6 +524,7 @@ int main(int argc, char** argv)
 	UnpauseGazebo();	
 	cout << "\r\n\n\n\033[32m\033[1mGAZEBO STARTED! \033[0m" << endl; 
 
+	ros::spinOnce();
 	// Reach home position
 	HomePosition();
 

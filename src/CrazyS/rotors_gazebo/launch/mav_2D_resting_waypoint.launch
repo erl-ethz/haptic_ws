@@ -8,7 +8,8 @@
   <arg name="gui" default="true"/>
   <arg name="paused" value="true"/>
   <arg name="verbose" default="false"/>
-  <arg name="multiple" default="false"/>
+  <arg name="plane" default="false"/>
+  <arg name="right" default="true"/>
 
   <env name="GAZEBO_MODEL_PATH" value="${GAZEBO_MODEL_PATH}:$(find rotors_gazebo)/models"/>
   <env name="GAZEBO_RESOURCE_PATH" value="${GAZEBO_RESOURCE_PATH}:$(find rotors_gazebo)/models"/>
@@ -38,9 +39,33 @@
     <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
   </group>
 
-  <!-- Spawn the obstacles into Gazebo -->
- <group ns="/vertical_obstacle">
-    <param name="obstacle_description" command="$(find xacro)/xacro --inorder $(find planar_structure)/urdf/vertical_obstacle.xacro"/>
-    <node name="spawn_obstacle" pkg="gazebo_ros" type="spawn_model" args="-param obstacle_description -urdf -model obstacle" output="screen"/>
+  <!-- Spawn the obstacles into Gazebo -->z
+  <group if="$(arg plane)">
+    <group if="$(arg right)">  
+      <group ns="/vertical_obstacle">
+        <param name="obstacle_description" command="$(find xacro)/xacro --inorder $(find planar_structure)/urdf/vertical_obstacle.xacro"/>
+        <node name="spawn_obstacle" pkg="gazebo_ros" type="spawn_model" args="-param obstacle_description -urdf -model obstacle" output="screen"/>
+      </group>
+    </group>
+    <group unless="$(arg right)"> 
+      <group ns="/vertical_obstacle">
+        <param name="obstacle_description" command="$(find xacro)/xacro --inorder $(find planar_structure)/urdf/vertical_obstacle.xacro"/>
+        <node name="spawn_obstacle" pkg="gazebo_ros" type="spawn_model" args="-param obstacle_description -x 1.6 -y 1.5 -Y 3.14 -urdf -model obstacle" output="screen"/>
+      </group>
+    </group>
+  </group>
+  <group unless="$(arg plane)">
+    <group if="$(arg right)">  
+      <group ns="/vertical_obstacle_cylinder">
+        <param name="obstacle_description" command="$(find xacro)/xacro --inorder $(find planar_structure)/urdf/vertical_obstacle_cylinder.xacro"/>
+        <node name="spawn_obstacle" pkg="gazebo_ros" type="spawn_model" args="-param obstacle_description -urdf -model obstacle" output="screen"/>
+      </group>
+    </group>
+    <group unless="$(arg right)"> 
+      <group ns="/vertical_obstacle_cylinder">
+        <param name="obstacle_description" command="$(find xacro)/xacro --inorder $(find planar_structure)/urdf/vertical_obstacle_cylinder.xacro"/>
+        <node name="spawn_obstacle" pkg="gazebo_ros" type="spawn_model" args="-param obstacle_description -x 0.9 -y 1.5 -Y 3.14 -urdf -model obstacle" output="screen"/>
+      </group>
+    </group>
   </group>
 </launch>
