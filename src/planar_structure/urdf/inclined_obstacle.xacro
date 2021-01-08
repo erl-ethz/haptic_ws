@@ -7,7 +7,7 @@
   
   <!-- Obstacle description -->
   <m_link_box name="${link_00_name}"
-              origin_rpy="0 0 0" origin_xyz="0.75 2.35 2.0"
+              origin_rpy="0 0 0" origin_xyz="0 2.35 2.0"
               mass="1000"
               ixx="800.0" ixy="0" ixz="0"
               iyy="800.0" iyz="0"
@@ -16,7 +16,7 @@
             
   <m_joint name="branch_joint1" type="revolute"
            axis_xyz="1 0 0"
-           origin_rpy="0 0 0" origin_xyz="0.75 2.1 1.75"
+           origin_rpy="0 0 0" origin_xyz="0 2.1 1.75"
            parent="${link_00_name}" child="virtual_link"
            limit_e="1000" limit_l="-1.3" limit_u="1.3" limit_v="0.5"
            damping="0.01" friction="0.01" />
@@ -30,7 +30,7 @@
               size="0.0 0.0 0.0" /> 
 
   <m_joint name="branch_joint2" type="revolute"
-           axis_xyz="0 1 0"
+           axis_xyz="0 0 1"
            origin_rpy="0 0 0" origin_xyz="0 0 0"
            parent="virtual_link" child="${link_01_name}"
            limit_e="1000" limit_l="-0.3" limit_u="0.3" limit_v="0.5"

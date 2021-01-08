@@ -19,7 +19,8 @@
 #include <thread>
 #include <chrono>
 #include <math.h>
-#include <iostream>
+#include <iostream> 
+#include <algorithm> 
 #include <fstream>
 
 #include <Eigen/Core>
@@ -49,22 +50,6 @@ ros::Publisher  ft_filtered_pub;			// Publisher for filtered F/T data
 ros::Publisher  thrust_pub;				// Publisher for current Thrust value
 const int PUB_TIME = 1;				  	// New waypoint is published every 'PUB_TIME' seconds
 
-// Force/torque variables
-Eigen::Vector3f raw_forces;
-Eigen::Vector3f raw_torques;
-double force_magnitude;
-const double MIN_LATERAL_FORCE_THRESHOLD  = 0.002; 	// [N]
-const double MAX_LATERAL_FORCE_THRESHOLD  = 2.6;   	// [N]
-const double CAGE_WEIGHT_OFFSET           = 0.147;  	// [N]
-const double CAGE_RADIUS                  = 0.255;  	// [m]
-
-// UAV variables
-Eigen::Vector3f pos;				  	// UAV global position [m]
-Eigen::Vector4f rotor_speed;				// Angular velocity of the rotors [rad/s]
-double thrust;						// Current Thrust force value
-const double coeff_thrust = 0.00000854858;		// Thrust coefficient for our drone (from Parrot Ardrone in RotorS)
-double hovering_thrust;					// Thrust value while hovering
-
 // Moving Average Filter variables
 geometry_msgs::Wrench ft_filtered_msg;
 const int N = 50;				  	// Window's size
@@ -74,20 +59,39 @@ Eigen::Vector3f sum_forces;
 Eigen::Vector3f sum_torques;
 bool first_flag = true;
 
+// Force/torque variables
+Eigen::Vector3f raw_forces;
+Eigen::Vector3f raw_torques;
+double force_magnitude;
+double polar_angle, azimuth_angle;
+const double MIN_VERTICAL_FORCE_THRESHOLD = 0.1; 	// [N]
+const double MAX_VERTICAL_FORCE_THRESHOLD  = 3.0;   	// [N]
+double CAGE_WEIGHT_OFFSET;	          //= 0.147;  	// [N]
+const double CAGE_RADIUS                  = 0.255;  	// [m]
+
+// UAV variables
+Eigen::Vector3f pos;				  	// UAV global position [m]
+Eigen::Vector4f rotor_speed;				// Angular velocity of the rotors [rad/s]
+double thrust;						// Current Thrust force value
+const double coeff_thrust = 0.00000854858;		// Thrust coefficient for our drone (from Parrot Ardrone in RotorS)
+double hovering_thrust;					// Thrust value while hovering
+
 // Position controller variables
 geometry_msgs::PoseStamped pos_msg;
 std_msgs::Float32 thrust_msg;
 double starting_time;
-double desired_heading, commanded_heading;
-double first_interaction_lateral_position;
-double lateral_slide = 0.0;
-double MAX_LATERAL_SLIDING = 0.01;	  		// [m]
+double commanded_polar, commanded_azimuth;
+double first_interaction_x, first_interaction_y;
+double lateral_slide_x      = 0.0;
+double lateral_slide_y      = 0.0;
+double MAX_LATERAL_SLIDING  = 0.01;	  		// [m]
 double pushing_effort       = 1;
+double last_effort;
 const double DELTA_PUSH	    = 0.2;
 const double MAX_EFFORT     = 500;
+const double CONTROL_GAIN_X = 0.01; 	 	 	// Controller Gain for X component
 const double CONTROL_GAIN_Y = 0.01; 	 	 	// Controller Gain for Y component
 const double CONTROL_GAIN_Z = 0.001;		 	// Controller Gain for Z component
-const double MAX_HEADING    = M_PI/2;		 	// Max desired heading angle [rad], equal to 90 deg
 bool sliding_flag           = false;
 bool contact_flag	    = false;
 
@@ -117,7 +121,7 @@ void UnpauseGazebo()
 	ros::spinOnce();
 
 	pos_msg.header.stamp = ros::Time::now();
-	pos_msg.pose.position.x = 0.25;
+	pos_msg.pose.position.x = 0.0;
 	pos_msg.pose.position.y = 0.0;
 	pos_msg.pose.position.z = 0.45;
 	pos_pub.publish(pos_msg);
@@ -209,7 +213,7 @@ void FilterFTSensor()
 	// Publish converted measurements for visualization
 	ft_filtered_msg.force.x  = sum_forces[0] / N;
 	ft_filtered_msg.force.y  = sum_forces[1] / N; 
-	ft_filtered_msg.force.z  = sum_forces[2] / N; 
+	ft_filtered_msg.force.z  = (sum_forces[2] / N) - CAGE_WEIGHT_OFFSET; 
 	ft_filtered_msg.torque.x = sum_torques[0] / N;
 	ft_filtered_msg.torque.y = sum_torques[1] / N;
 	ft_filtered_msg.torque.z = sum_torques[2] / N;
@@ -226,29 +230,22 @@ void FilterFTSensor()
 	force_magnitude = sqrt(ft_filtered_msg.force.x*ft_filtered_msg.force.x + 
 			       ft_filtered_msg.force.y*ft_filtered_msg.force.y + 
 			       ft_filtered_msg.force.z*ft_filtered_msg.force.z);
-}
 
-// Compute the desired heading angle
-void ComputeDesiredHeading()
-{
-	// Calculate desired angle from the components of the external force
-	desired_heading = atan2(ft_filtered_msg.force.y, ft_filtered_msg.force.z);
-
-	cout << "Desired heading angle: " << (180/M_PI)*desired_heading << " [deg], " 
-                                          <<            desired_heading << " [rad]" 
-				          				<< endl;
+	// Compute polar and azimuth angles
+	polar_angle = acos(ft_filtered_msg.force.z/force_magnitude);
+	azimuth_angle = atan2(ft_filtered_msg.force.y, ft_filtered_msg.force.x);
 }
 
 // New waypoint computed with respect to the ellipsoid formulation (upper waypoint in case of sliding)
-void ControlStrategy(double effort, double heading_d)
+void ControlStrategy(double effort, double theta, double phi)
 {
 	cout << "-------" << endl;
 
 	// Saturation of the commanded heading angle
-	if(heading_d > MAX_HEADING)
-		heading_d = MAX_HEADING;
-	else if(heading_d < -MAX_HEADING)
-		heading_d = -MAX_HEADING;
+	if(theta > M_PI)
+		theta = M_PI;
+	else if(theta <= -M_PI)
+		theta = -M_PI;
 
 	// Staturation of the pushing effort
 	if(effort >= MAX_EFFORT)
@@ -256,21 +253,25 @@ void ControlStrategy(double effort, double heading_d)
 
 	// Compose controller message
 	pos_msg.header.stamp = ros::Time::now();
-	// X position is always fixed (because the drone is constraint to the structure)
-	pos_msg.pose.position.x = pos[0];
-	// Change Y,Z coordinate depending on the current state of the system
-	pos_msg.pose.position.y = pos[1] - (effort * CONTROL_GAIN_Y * sin(heading_d));
-	pos_msg.pose.position.z = pos[2] - (effort * CONTROL_GAIN_Z * cos(heading_d));
+	// Compute waypoint depending on the ellipsoid strategy
+	pos_msg.pose.position.x = pos[0] - (effort * CONTROL_GAIN_X * sin(theta) * cos(phi));
+	pos_msg.pose.position.y = pos[1] - (effort * CONTROL_GAIN_Y * sin(theta) * sin(phi));
+	pos_msg.pose.position.z = pos[2] - (effort * CONTROL_GAIN_Z * cos(theta));
 	pos_pub.publish(pos_msg);
 
 	// Update control parameters
-	commanded_heading = heading_d;
+	commanded_polar = theta;
+	commanded_azimuth = phi;
 	pushing_effort = effort;
 
-	cout << "COMMANDED ANGLE: " << (180/M_PI)*commanded_heading << " [deg], " 
-                                    <<            commanded_heading << " [rad]" 
-				                                    << endl;
-	cout << "EFFORT: "          << effort                       << endl;
+	cout << "COMMANDED POLAR: "   << (180/M_PI)*commanded_polar   << " [deg], " 
+                                      <<            commanded_polar   << " [rad]" 
+				                                      << endl;
+	cout << "COMMANDED AZIMUTH: " << (180/M_PI)*commanded_azimuth << " [deg], " 
+                                      <<            commanded_azimuth << " [rad]" 
+				                                      << endl;
+	cout << "LAST EFFORT: "       << last_effort		      << endl;
+	cout << "EFFORT: "            << pushing_effort               << endl;
 }
 
 // State Machine handler
@@ -279,32 +280,41 @@ void StateMachine()
 	cout << "\r\n\n\033[32m\033[1m--------------------------------------------------------------\033[0m" << endl;
 	
 	// Print force filtered data
-	cout << "Lateral Force (x) [N]: "  << ft_filtered_msg.force.x   << endl;
-	cout << "Lateral Force (y) [N]: "  << ft_filtered_msg.force.y   << endl;
-	cout << "Vertical Force (z) [N]: " << ft_filtered_msg.force.z   << endl;
-	cout << "Force magnitude [N]: "    << force_magnitude           << endl;
-	cout << "Rolling moment (x) [Nm] " << ft_filtered_msg.torque.x  << endl;
-	cout << "Pitching moment (y) [Nm] " << ft_filtered_msg.torque.y << endl;
-	cout << "-------" 		                                << endl;
+	cout << "Lateral Force (x) [N]: "  << ft_filtered_msg.force.x  << endl;
+	cout << "Lateral Force (y) [N]: "  << ft_filtered_msg.force.y  << endl;
+	cout << "Vertical Force (z) [N]: " << ft_filtered_msg.force.z  << endl;
+	cout << "Force magnitude [N]: "    << force_magnitude          << endl;
+	cout << "--" 		                                       << endl;
+	cout << "Roll moment (x) [Nm] "    << ft_filtered_msg.torque.x << endl;
+	cout << "Pitch moment (y) [Nm] "   << ft_filtered_msg.torque.y << endl;
+	cout << "Yaw moment (z) [Nm] "     << ft_filtered_msg.torque.z << endl;
+	cout << "--" 		                                       << endl;
+	cout << "Polar Angle: "            << (180/M_PI)*polar_angle   << " [deg], " 
+                                    	   <<            polar_angle   << " [rad]" 
+				                                       << endl;	  
+	cout << "Azimuth Angle: "          << (180/M_PI)*azimuth_angle << " [deg], " 
+                                    	   <<            azimuth_angle << " [rad]" 
+				                                       << endl;	 
+	cout << "-------" 		                               << endl;
 
 	if(!sliding_flag)
 	{
 		// No contact detected: drone in landing phase (flying down)
-		if(fabs(ft_filtered_msg.force.y) < MIN_LATERAL_FORCE_THRESHOLD && !contact_flag)
+		if(fabs(ft_filtered_msg.force.z) < MIN_VERTICAL_FORCE_THRESHOLD && !contact_flag)
 		{
 			cout << "\033[32m\033[0mLANDING PHASE! \033[0m" << endl;
 
 			// Reset variables	
 			pushing_effort = 1;	
 			sliding_flag   = false;
-			contact_flag = false;
-			starting_time = ros::Time::now().toSec();
+			contact_flag   = false;
+			starting_time  = ros::Time::now().toSec();
 
 			// Height reference decreased of a fixed amount
-			ControlStrategy(pushing_effort, 0);
+			ControlStrategy(pushing_effort, 0, 0);
 		}
 		// Contact detected: lay on the osbtacle to minimize the energy until a threshold in lateral or vertical force is overcome
-		else if((fabs(ft_filtered_msg.force.y) > MIN_LATERAL_FORCE_THRESHOLD && fabs(ft_filtered_msg.force.y) < MAX_LATERAL_FORCE_THRESHOLD))
+		else if(fabs(ft_filtered_msg.force.z) > MIN_VERTICAL_FORCE_THRESHOLD && fabs(ft_filtered_msg.force.z) < MAX_VERTICAL_FORCE_THRESHOLD)
 		{
 			cout << "\033[32m\033[0mCONTACT DETECTED: MINIMIZING ENERGY! \033[0m" << endl;
 			
@@ -312,7 +322,8 @@ void StateMachine()
 			if(!contact_flag)
 			{
 				// Save current lateral position
-				first_interaction_lateral_position = pos[1];			
+				first_interaction_x = pos[0];	
+				first_interaction_y = pos[1];		
 				contact_flag = true;
 			}
 
@@ -324,57 +335,68 @@ void StateMachine()
 			}
 		
 			// Decrease the height reference to lay more and more on the detected obstacle
-			ControlStrategy(pushing_effort, 0);
+			ControlStrategy(pushing_effort, 0, 0);
 
 			sliding_flag = false;
-			// Compute lateral slide
-			lateral_slide = fabs(first_interaction_lateral_position - pos[1]);
+
+			// Compute lateral slides
+			lateral_slide_x = fabs(first_interaction_x - pos[0]);
+			lateral_slide_y = fabs(first_interaction_y - pos[1]);
 		}
+		last_effort = pushing_effort;
 	}
 
 	// Threshold overcome: obstacle too compliant, the drone is slipping, no need to push more
 	//else if(fabs(ft_filtered_msg.force.y) > MAX_LATERAL_FORCE_THRESHOLD)
-	/*if(lateral_slide > MAX_LATERAL_SLIDING)
+	if(max(lateral_slide_x,lateral_slide_y) > MAX_LATERAL_SLIDING)
 	{
 		cout << "\033[32m\033[0mRESTING PHASE! \033[0m" << endl;
 
 		// Compute desired heading only before the drone starts to slide
-		if(!sliding_flag)
-			ComputeDesiredHeading();
+		//if(!sliding_flag)
 
 		// Update variable
 		sliding_flag = true;
 
 		// Adaptive adjustment of the desired heading angle
-		int sign = (ft_filtered_msg.torque.x > 0) ? -1 : 1;		
-		ControlStrategy(pushing_effort*lateral_slide/MAX_LATERAL_SLIDING, sign*desired_heading); 
-		// Compute lateral slide
-		lateral_slide = fabs(first_interaction_lateral_position - pos[1]);
+		int sign_p = (ft_filtered_msg.torque.x > 0) ? -1 : 1;
+		int sign_a = (ft_filtered_msg.torque.y > 0) ? -1 : 1;
+		double adaptive = max(lateral_slide_x,lateral_slide_y)/MAX_LATERAL_SLIDING;	
+		ControlStrategy(last_effort*adaptive, sign_p*polar_angle, sign_a*azimuth_angle); 
+		
+		// Compute lateral slides
+		lateral_slide_x = fabs(first_interaction_x - pos[0]);
+		lateral_slide_y = fabs(first_interaction_y - pos[1]);
 	}
-	*/
+	
 	// After Resting the demo is finished. Any attempts or lower again the thrust leads to slip
 			
-	cout << "Lateral slide: " << 100*(fabs(first_interaction_lateral_position - pos[1])) << " [cm]" << endl;
-	// Print current Thrust force value
-	cout << "THRUST: " << thrust << " [N]. Energy minimized: " << 100*(1-thrust/hovering_thrust) << "%" << endl;
-
 	// Print current position and commanded waypoint
 	cout << "-------"                      << endl;	
-	cout << "Current position = X: "       << pos[0] 
-             <<                  ", Y: "       << pos[1] 
-             <<                  ", Z: "       << pos[2] 
+	cout << "Current position       = X: " << pos[0] 
+             <<                        ", Y: " << pos[1] 
+             <<                        ", Z: " << pos[2] 
 	                                       << endl;
 	cout << "Publishing new waypoint! X: " << pos_msg.pose.position.x 
              <<                        ", Y: " << pos_msg.pose.position.y 
              <<                        ", Z: " << pos_msg.pose.position.z 
 	                                       << endl;
+
+	cout << "-------"                      << endl;	
+	cout << "Lateral slide (x): " << 100*(fabs(first_interaction_x - pos[0])) << " [cm]" << endl;
+	cout << "Lateral slide (y): " << 100*(fabs(first_interaction_y - pos[1])) << " [cm]" << endl;
+
+	// Publiush and print current Thrust force value
+	thrust_msg.data = thrust;
+	thrust_pub.publish(thrust_msg);
+	cout << "THRUST: " << thrust << " [N]. Energy minimized: " << 100*(1-thrust/hovering_thrust) << "%" << endl;
 }
 
 // Reach home position above the resting spot and be ready for resting
 void HomePosition()
 {
 	pos_msg.header.stamp = ros::Time::now();
-	pos_msg.pose.position.x = 0.75;
+	pos_msg.pose.position.x = -0.02;
 	pos_msg.pose.position.y = 0.0;
 	pos_msg.pose.position.z = 0.75;
 	pos_pub.publish(pos_msg);
@@ -383,7 +405,7 @@ void HomePosition()
 	ros::spinOnce();
 
 	pos_msg.header.stamp = ros::Time::now();
-	pos_msg.pose.position.x = 0.75;
+	pos_msg.pose.position.x = -0.02;
 	pos_msg.pose.position.y = 0.0;
 	pos_msg.pose.position.z = 1.5;
 	pos_pub.publish(pos_msg);
@@ -392,7 +414,7 @@ void HomePosition()
 	ros::spinOnce();
 
 	pos_msg.header.stamp = ros::Time::now();
-	pos_msg.pose.position.x = 0.75;
+	pos_msg.pose.position.x = -0.02;
 	pos_msg.pose.position.y = 0.2;
 	pos_msg.pose.position.z = 2.0;
 	pos_pub.publish(pos_msg);
@@ -401,7 +423,7 @@ void HomePosition()
 	ros::spinOnce();
 
 	pos_msg.header.stamp = ros::Time::now();
-	pos_msg.pose.position.x = 0.75;
+	pos_msg.pose.position.x = -0.02;
 	pos_msg.pose.position.y = 0.6;
 	pos_msg.pose.position.z = 2.25;
 	pos_pub.publish(pos_msg);
@@ -410,16 +432,19 @@ void HomePosition()
 	ros::spinOnce();
 
 	pos_msg.header.stamp = ros::Time::now();
-	pos_msg.pose.position.x = 0.75;
+	pos_msg.pose.position.x = -0.02;
 	pos_msg.pose.position.y = 1.2;
 	pos_msg.pose.position.z = 2.5;
 	pos_pub.publish(pos_msg);
 
-	sleep(10);
+	sleep(6);
 	ros::spinOnce();
 
 	hovering_thrust = thrust;
 	cout << "Home position reached. Hovering Thrust: " << hovering_thrust << " [N] " << endl;
+	
+	CAGE_WEIGHT_OFFSET = raw_forces[2];
+	cout << "Cage offset: " << CAGE_WEIGHT_OFFSET << " [N] " << endl;
 }
 
 // Main function
@@ -463,14 +488,9 @@ int main(int argc, char** argv)
 
 		// Filter force/torque measurements
 		FilterFTSensor();
-			
-		// Publish thrust value
-		thrust_msg.data = thrust;
-		thrust_pub.publish(thrust_msg);
-		cout << "THRUST: " << thrust << " [N]. Energy minimized: " << 100*(1-thrust/hovering_thrust) << "%" << endl;
-	 		
+				
 		// State Machine running!
-		//StateMachine();
+		StateMachine();
 		
 		// Open log file, save data and close it
 		/*

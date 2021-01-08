@@ -8,6 +8,8 @@
 
 # modified environment variables
 export CMAKE_PREFIX_PATH="/home/emanuele/catkin_ws/devel/.private/rotors_gazebo_plugins:$CMAKE_PREFIX_PATH"
+export LD_LIBRARY_PATH="/home/emanuele/catkin_ws/devel/.private/rotors_gazebo_plugins/lib:$LD_LIBRARY_PATH"
+export PKG_CONFIG_PATH="/home/emanuele/catkin_ws/devel/.private/rotors_gazebo_plugins/lib/pkgconfig:$PKG_CONFIG_PATH"
 export PWD='/home/emanuele/catkin_ws/build/rotors_gazebo_plugins'
 export ROSLISP_PACKAGE_DIRECTORIES="/home/emanuele/catkin_ws/devel/.private/rotors_gazebo_plugins/share/common-lisp:$ROSLISP_PACKAGE_DIRECTORIES"
 export ROS_PACKAGE_PATH="/home/emanuele/catkin_ws/src/CrazyS/rotors_gazebo_plugins:$ROS_PACKAGE_PATH"

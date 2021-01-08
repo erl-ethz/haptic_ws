@@ -401,9 +401,9 @@ void StateMachine()
 
 	// Print current position and commanded waypoint
 	cout << "-------"                      << endl;	
-	cout << "Current position = X: "       << pos[0] 
-             <<                  ", Y: "       << pos[1] 
-             <<                  ", Z: "       << pos[2] 
+	cout << "Current position       = X: " << pos[0] 
+             <<                        ", Y: " << pos[1] 
+             <<                        ", Z: " << pos[2] 
 	                                       << endl;
 	cout << "Publishing new waypoint! X: " << pos_msg.pose.position.x 
              <<                        ", Y: " << pos_msg.pose.position.y 

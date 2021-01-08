@@ -1,0 +1,25 @@
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_3D_resting_waypoint_controller.cpp:[m[K In function ‘[01m[Kvoid StateMachine()[m[K’:
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_3D_resting_waypoint_controller.cpp:363:3:[m[K [01;31m[Kerror: [m[K‘[01m[Klateral_slide[m[K’ was not declared in this scope
+   [01;31m[Klateral_slide[m[K = fabs(first_interaction_lateral_position - pos[1]);
+   [01;31m[K^~~~~~~~~~~~~[m[K
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_3D_resting_waypoint_controller.cpp:363:3:[m[K [01;36m[Knote: [m[Ksuggested alternative: ‘[01m[Klateral_slide_y[m[K’
+   [01;36m[Klateral_slide[m[K = fabs(first_interaction_lateral_position - pos[1]);
+   [01;36m[K^~~~~~~~~~~~~[m[K
+   [32m[Klateral_slide_y[m[K
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_3D_resting_waypoint_controller.cpp:363:24:[m[K [01;31m[Kerror: [m[K‘[01m[Kfirst_interaction_lateral_position[m[K’ was not declared in this scope
+   lateral_slide = fabs([01;31m[Kfirst_interaction_lateral_position[m[K - pos[1]);
+                        [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_3D_resting_waypoint_controller.cpp:363:24:[m[K [01;36m[Knote: [m[Ksuggested alternative: ‘[01m[Kfirst_interaction_y[m[K’
+   lateral_slide = fabs([01;36m[Kfirst_interaction_lateral_position[m[K - pos[1]);
+                        [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+                        [32m[Kfirst_interaction_y[m[K
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_3D_resting_waypoint_controller.cpp:381:41:[m[K [01;31m[Kerror: [m[K‘[01m[Kfirst_interaction_lateral_position[m[K’ was not declared in this scope
+  cout << "Lateral slide: " << 100*(fabs([01;31m[Kfirst_interaction_lateral_position[m[K - pos[1])) << " [cm]" << endl;
+                                         [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_3D_resting_waypoint_controller.cpp:381:41:[m[K [01;36m[Knote: [m[Ksuggested alternative: ‘[01m[Kfirst_interaction_y[m[K’
+  cout << "Lateral slide: " << 100*(fabs([01;36m[Kfirst_interaction_lateral_position[m[K - pos[1])) << " [cm]" << endl;
+                                         [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+                                         [32m[Kfirst_interaction_y[m[K
+make[2]: *** [CMakeFiles/high_level_3D_resting_waypoint_controller.dir/src/nodes/high_level_3D_resting_waypoint_controller.cpp.o] Error 1
+make[1]: *** [CMakeFiles/high_level_3D_resting_waypoint_controller.dir/all] Error 2
+make: *** [all] Error 2
