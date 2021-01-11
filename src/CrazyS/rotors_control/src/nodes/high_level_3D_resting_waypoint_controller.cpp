@@ -65,7 +65,7 @@ Eigen::Vector3f raw_torques;
 double force_magnitude;
 double polar_angle, azimuth_angle;
 const double MIN_VERTICAL_FORCE_THRESHOLD = 0.1; 	// [N]
-const double MAX_VERTICAL_FORCE_THRESHOLD  = 3.0;   	// [N]
+const double MAX_VERTICAL_FORCE_THRESHOLD = 3.0;   	// [N]
 double CAGE_WEIGHT_OFFSET;	          //= 0.147;  	// [N]
 const double CAGE_RADIUS                  = 0.255;  	// [m]
 
@@ -79,6 +79,7 @@ double hovering_thrust;					// Thrust value while hovering
 // Position controller variables
 geometry_msgs::PoseStamped pos_msg;
 std_msgs::Float32 thrust_msg;
+Eigen::Vector3f interaction_pos, control_pos;
 double starting_time;
 double commanded_polar, commanded_azimuth;
 double first_interaction_x, first_interaction_y;
@@ -87,8 +88,8 @@ double lateral_slide_y      = 0.0;
 double MAX_LATERAL_SLIDING  = 0.01;	  		// [m]
 double pushing_effort       = 1;
 double last_effort;
-const double DELTA_PUSH	    = 0.2;
-const double MAX_EFFORT     = 500;
+const double DELTA_PUSH	    = 5;
+const double MAX_EFFORT     = 200;
 const double CONTROL_GAIN_X = 0.01; 	 	 	// Controller Gain for X component
 const double CONTROL_GAIN_Y = 0.01; 	 	 	// Controller Gain for Y component
 const double CONTROL_GAIN_Z = 0.001;		 	// Controller Gain for Z component
@@ -237,7 +238,7 @@ void FilterFTSensor()
 }
 
 // New waypoint computed with respect to the ellipsoid formulation (upper waypoint in case of sliding)
-void ControlStrategy(double effort, double theta, double phi)
+void ControlStrategy(Eigen::Vector3f set_pos, double effort, double theta, double phi)
 {
 	cout << "-------" << endl;
 
@@ -254,24 +255,15 @@ void ControlStrategy(double effort, double theta, double phi)
 	// Compose controller message
 	pos_msg.header.stamp = ros::Time::now();
 	// Compute waypoint depending on the ellipsoid strategy
-	pos_msg.pose.position.x = pos[0] - (effort * CONTROL_GAIN_X * sin(theta) * cos(phi));
-	pos_msg.pose.position.y = pos[1] - (effort * CONTROL_GAIN_Y * sin(theta) * sin(phi));
-	pos_msg.pose.position.z = pos[2] - (effort * CONTROL_GAIN_Z * cos(theta));
+	pos_msg.pose.position.x = set_pos[0] - (effort * CONTROL_GAIN_X * sin(theta) * cos(phi));
+	pos_msg.pose.position.y = set_pos[1] - (effort * CONTROL_GAIN_Y * sin(theta) * sin(phi));
+	pos_msg.pose.position.z = set_pos[2] - (effort * CONTROL_GAIN_Z * cos(theta));
 	pos_pub.publish(pos_msg);
 
 	// Update control parameters
 	commanded_polar = theta;
 	commanded_azimuth = phi;
 	pushing_effort = effort;
-
-	cout << "COMMANDED POLAR: "   << (180/M_PI)*commanded_polar   << " [deg], " 
-                                      <<            commanded_polar   << " [rad]" 
-				                                      << endl;
-	cout << "COMMANDED AZIMUTH: " << (180/M_PI)*commanded_azimuth << " [deg], " 
-                                      <<            commanded_azimuth << " [rad]" 
-				                                      << endl;
-	cout << "LAST EFFORT: "       << last_effort		      << endl;
-	cout << "EFFORT: "            << pushing_effort               << endl;
 }
 
 // State Machine handler
@@ -304,14 +296,15 @@ void StateMachine()
 		{
 			cout << "\033[32m\033[0mLANDING PHASE! \033[0m" << endl;
 
-			// Reset variables	
+			// Set variables
+			control_pos = pos;	
 			pushing_effort = 1;	
 			sliding_flag   = false;
 			contact_flag   = false;
 			starting_time  = ros::Time::now().toSec();
 
 			// Height reference decreased of a fixed amount
-			ControlStrategy(pushing_effort, 0, 0);
+			ControlStrategy(control_pos, pushing_effort, 0, 0);
 		}
 		// Contact detected: lay on the osbtacle to minimize the energy until a threshold in lateral or vertical force is overcome
 		else if(fabs(ft_filtered_msg.force.z) > MIN_VERTICAL_FORCE_THRESHOLD && fabs(ft_filtered_msg.force.z) < MAX_VERTICAL_FORCE_THRESHOLD)
@@ -321,9 +314,8 @@ void StateMachine()
 			// First time in contact
 			if(!contact_flag)
 			{
-				// Save current lateral position
-				first_interaction_x = pos[0];	
-				first_interaction_y = pos[1];		
+				// Save current position (useful for lateral slide)
+				interaction_pos = pos;	
 				contact_flag = true;
 			}
 
@@ -333,15 +325,19 @@ void StateMachine()
 				pushing_effort += DELTA_PUSH;
 				starting_time = ros::Time::now().toSec();
 			}
-		
-			// Decrease the height reference to lay more and more on the detected obstacle
-			ControlStrategy(pushing_effort, 0, 0);
-
+			
+			// Set variables
+			control_pos[0] = interaction_pos[0];
+			control_pos[1] = interaction_pos[1];
+			control_pos[2] = pos[2];
 			sliding_flag = false;
 
+			// Decrease the height reference to lay more and more on the detected obstacle
+			ControlStrategy(control_pos, pushing_effort, 0, 0);
+
 			// Compute lateral slides
-			lateral_slide_x = fabs(first_interaction_x - pos[0]);
-			lateral_slide_y = fabs(first_interaction_y - pos[1]);
+			lateral_slide_x = fabs(interaction_pos[0] - pos[0]);
+			lateral_slide_y = fabs(interaction_pos[1] - pos[1]);
 		}
 		last_effort = pushing_effort;
 	}
@@ -352,24 +348,32 @@ void StateMachine()
 	{
 		cout << "\033[32m\033[0mRESTING PHASE! \033[0m" << endl;
 
-		// Compute desired heading only before the drone starts to slide
+		// Only after the first contact
 		//if(!sliding_flag)
 
 		// Update variable
 		sliding_flag = true;
+		control_pos = pos;
 
 		// Adaptive adjustment of the desired heading angle
 		int sign_p = (ft_filtered_msg.torque.x > 0) ? -1 : 1;
 		int sign_a = (ft_filtered_msg.torque.y > 0) ? -1 : 1;
 		double adaptive = max(lateral_slide_x,lateral_slide_y)/MAX_LATERAL_SLIDING;	
-		ControlStrategy(last_effort*adaptive, sign_p*polar_angle, sign_a*azimuth_angle); 
+		ControlStrategy(control_pos, last_effort*adaptive, sign_p*polar_angle, sign_a*azimuth_angle); 
 		
 		// Compute lateral slides
-		lateral_slide_x = fabs(first_interaction_x - pos[0]);
-		lateral_slide_y = fabs(first_interaction_y - pos[1]);
+		lateral_slide_x = fabs(interaction_pos[0] - pos[0]);
+		lateral_slide_y = fabs(interaction_pos[1] - pos[1]);
 	}
 	
-	// After Resting the demo is finished. Any attempts or lower again the thrust leads to slip
+	cout << "COMMANDED POLAR: "   << (180/M_PI)*commanded_polar   << " [deg], " 
+                                      <<            commanded_polar   << " [rad]" 
+				                                      << endl;
+	cout << "COMMANDED AZIMUTH: " << (180/M_PI)*commanded_azimuth << " [deg], " 
+                                      <<            commanded_azimuth << " [rad]" 
+				                                      << endl;
+	cout << "LAST EFFORT: "       << last_effort		      << endl;
+	cout << "EFFORT: "            << pushing_effort               << endl;
 			
 	// Print current position and commanded waypoint
 	cout << "-------"                      << endl;	
@@ -383,8 +387,11 @@ void StateMachine()
 	                                       << endl;
 
 	cout << "-------"                      << endl;	
-	cout << "Lateral slide (x): " << 100*(fabs(first_interaction_x - pos[0])) << " [cm]" << endl;
-	cout << "Lateral slide (y): " << 100*(fabs(first_interaction_y - pos[1])) << " [cm]" << endl;
+	if(contact_flag)
+	{
+		cout << "Lateral slide (x): " << 100*(fabs(interaction_pos[0] - pos[0])) << " [cm]" << endl;
+		cout << "Lateral slide (y): " << 100*(fabs(interaction_pos[1] - pos[1])) << " [cm]" << endl;
+	}
 
 	// Publiush and print current Thrust force value
 	thrust_msg.data = thrust;
