@@ -1,0 +1,7 @@
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_3D_resting_waypoint_controller.cpp:[m[K In function ‘[01m[Kvoid HomePosition()[m[K’:
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_3D_resting_waypoint_controller.cpp:413:42:[m[K [01;31m[Kerror: [m[Kexpected ‘[01m[K;[m[K’ before string constant
+  cout << "Reaching home position (" << x [01;31m[K", "[m[K << y << ", " << z << ") exploiting a set trajectory." << endl;
+                                          [01;31m[K^~~~[m[K
+make[2]: *** [CMakeFiles/high_level_3D_resting_waypoint_controller.dir/src/nodes/high_level_3D_resting_waypoint_controller.cpp.o] Error 1
+make[1]: *** [CMakeFiles/high_level_3D_resting_waypoint_controller.dir/all] Error 2
+make: *** [all] Error 2

@@ -48,7 +48,7 @@ ros::Subscriber rotor_speed_sub;			// Subscriber to rotor angular velocity
 ros::Publisher  pos_pub;				// Publisher for position controller
 ros::Publisher  ft_filtered_pub;			// Publisher for filtered F/T data
 ros::Publisher  thrust_pub;				// Publisher for current Thrust value
-const int PUB_TIME = 1;				  	// New waypoint is published every 'PUB_TIME' seconds
+const int PUB_TIME = 1.5;			  	// New waypoint (while pushing down) is published every 'PUB_TIME' seconds
 
 // Moving Average Filter variables
 geometry_msgs::Wrench ft_filtered_msg;
@@ -65,9 +65,10 @@ Eigen::Vector3f raw_torques;
 double force_magnitude;
 double polar_angle, azimuth_angle;
 const double MIN_VERTICAL_FORCE_THRESHOLD = 0.1; 	// [N]
-const double MAX_VERTICAL_FORCE_THRESHOLD = 3.0;   	// [N]
-double CAGE_WEIGHT_OFFSET;	          //= 0.147;  	// [N]
+const double MAX_VERTICAL_FORCE_THRESHOLD = 2.0;   	// [N]
 const double CAGE_RADIUS                  = 0.255;  	// [m]
+double CAGE_WEIGHT_OFFSET;	          //= 0.147;  	// [N]
+
 
 // UAV variables
 Eigen::Vector3f pos;				  	// UAV global position [m]
@@ -89,7 +90,7 @@ double MAX_LATERAL_SLIDING  = 0.01;	  		// [m]
 double pushing_effort       = 1;
 double last_effort;
 const double DELTA_PUSH	    = 5;
-const double MAX_EFFORT     = 200;
+const double MAX_EFFORT     = 15;
 const double CONTROL_GAIN_X = 0.01; 	 	 	// Controller Gain for X component
 const double CONTROL_GAIN_Y = 0.01; 	 	 	// Controller Gain for Y component
 const double CONTROL_GAIN_Z = 0.001;		 	// Controller Gain for Z component
@@ -343,29 +344,31 @@ void StateMachine()
 	}
 
 	// Threshold overcome: obstacle too compliant, the drone is slipping, no need to push more
-	//else if(fabs(ft_filtered_msg.force.y) > MAX_LATERAL_FORCE_THRESHOLD)
-	if(max(lateral_slide_x,lateral_slide_y) > MAX_LATERAL_SLIDING)
+	if(max(lateral_slide_x,lateral_slide_y) > MAX_LATERAL_SLIDING && !sliding_flag)
 	{
-		cout << "\033[32m\033[0mRESTING PHASE! \033[0m" << endl;
-
-		// Only after the first contact
-		//if(!sliding_flag)
+		//cout << "\033[32m\033[0mRESTING PHASE! \033[0m" << endl;
 
 		// Update variable
 		sliding_flag = true;
 		control_pos = pos;
 
 		// Adaptive adjustment of the desired heading angle
-		int sign_p = (ft_filtered_msg.torque.x > 0) ? -1 : 1;
-		int sign_a = (ft_filtered_msg.torque.y > 0) ? -1 : 1;
-		double adaptive = max(lateral_slide_x,lateral_slide_y)/MAX_LATERAL_SLIDING;	
+		int sign_p = 1; //(ft_filtered_msg.torque.x > 0) ? -1 : 1;
+		int sign_a = 1; //(ft_filtered_msg.torque.y > 0) ? -1 : 1;
+		double adaptive = 1; //max(lateral_slide_x,lateral_slide_y)/MAX_LATERAL_SLIDING;	
 		ControlStrategy(control_pos, last_effort*adaptive, sign_p*polar_angle, sign_a*azimuth_angle); 
 		
 		// Compute lateral slides
-		lateral_slide_x = fabs(interaction_pos[0] - pos[0]);
-		lateral_slide_y = fabs(interaction_pos[1] - pos[1]);
+		//lateral_slide_x = fabs(interaction_pos[0] - pos[0]);
+		//lateral_slide_y = fabs(interaction_pos[1] - pos[1]);
 	}
-	
+
+	if(sliding_flag)
+	{
+		cout << "\033[32m\033[0mRESTING PHASE! \033[0m" << endl;
+		cout << "-------" 				<< endl;
+	}
+
 	cout << "COMMANDED POLAR: "   << (180/M_PI)*commanded_polar   << " [deg], " 
                                       <<            commanded_polar   << " [rad]" 
 				                                      << endl;
@@ -402,19 +405,34 @@ void StateMachine()
 // Reach home position above the resting spot and be ready for resting
 void HomePosition()
 {
+	double x, y, z;
+	cout << "Enter home position coordinate (format: x y z): ";
+	cin >> x >> y >> z;
+	getchar();
+	cout << "Reaching home position (" << x << ", " << y << ", " << z << ") exploiting a set trajectory." << endl;
+
 	pos_msg.header.stamp = ros::Time::now();
-	pos_msg.pose.position.x = -0.02;
+	pos_msg.pose.position.x = x;
 	pos_msg.pose.position.y = 0.0;
-	pos_msg.pose.position.z = 0.75;
+	pos_msg.pose.position.z = z/5;
 	pos_pub.publish(pos_msg);
 
 	sleep(1);
 	ros::spinOnce();
 
 	pos_msg.header.stamp = ros::Time::now();
-	pos_msg.pose.position.x = -0.02;
+	pos_msg.pose.position.x = x;
 	pos_msg.pose.position.y = 0.0;
-	pos_msg.pose.position.z = 1.5;
+	pos_msg.pose.position.z = z*2/5;
+	pos_pub.publish(pos_msg);
+
+	sleep(1);
+	ros::spinOnce();
+
+	pos_msg.header.stamp = ros::Time::now();
+	pos_msg.pose.position.x = x;
+	pos_msg.pose.position.y = 0.0;
+	pos_msg.pose.position.z = z*3/5;
 	pos_pub.publish(pos_msg);
 
 	sleep(1);
@@ -422,26 +440,17 @@ void HomePosition()
 
 	pos_msg.header.stamp = ros::Time::now();
 	pos_msg.pose.position.x = -0.02;
-	pos_msg.pose.position.y = 0.2;
-	pos_msg.pose.position.z = 2.0;
+	pos_msg.pose.position.y = y/4;
+	pos_msg.pose.position.z = z*4/5;
 	pos_pub.publish(pos_msg);
 
 	sleep(1);
 	ros::spinOnce();
 
 	pos_msg.header.stamp = ros::Time::now();
-	pos_msg.pose.position.x = -0.02;
-	pos_msg.pose.position.y = 0.6;
-	pos_msg.pose.position.z = 2.25;
-	pos_pub.publish(pos_msg);
-
-	sleep(1);
-	ros::spinOnce();
-
-	pos_msg.header.stamp = ros::Time::now();
-	pos_msg.pose.position.x = -0.02;
-	pos_msg.pose.position.y = 1.2;
-	pos_msg.pose.position.z = 2.5;
+	pos_msg.pose.position.x = x;
+	pos_msg.pose.position.y = y;
+	pos_msg.pose.position.z = z;
 	pos_pub.publish(pos_msg);
 
 	sleep(6);
@@ -506,8 +515,8 @@ int main(int argc, char** argv)
 			<< pos[2] 		     	   << ", " 
 			<< pos_msg.pose.position.y   	   << ", " 
 			<< pos_msg.pose.position.z   	   << ", " 
-			<< (180/M_PI)*desired_heading  	   << ", "
-			<< (180/M_PI)*commanded_heading	   << ", "
+			<< (180/M_PI)*commanded_polar  	   << ", "
+			<< (180/M_PI)*commanded_azimuth	   << ", "
 			<< pushing_effort	     	   << ", "
 			<< ft_filtered_msg.torque.x  	   << ", " 
 			<< ft_filtered_msg.force.y   	   << ", " 

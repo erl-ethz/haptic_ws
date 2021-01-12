@@ -51,16 +51,16 @@
   <!-- Macro for Torsional Joint Spring Plugin -->
   <gazebo>
     <plugin name="joint_spring1" filename="libjoint_torsional_spring_plugin.so">
-      <kx>10</kx>
-      <set_point>-0.01</set_point>
+      <kx>5</kx>
+      <set_point>-0.045</set_point>
       <joint>branch_joint1</joint>
     </plugin>
   </gazebo> 
 
   <gazebo>
     <plugin name="joint_spring2" filename="libjoint_torsional_spring_plugin.so">
-      <kx>10</kx>
-      <set_point>-0.01</set_point>
+      <kx>5</kx>
+      <set_point>0.0</set_point>
       <joint>branch_joint2</joint>
     </plugin>
   </gazebo> 

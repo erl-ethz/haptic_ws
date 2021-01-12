@@ -1,0 +1,18 @@
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_3D_resting_waypoint_controller.cpp:[m[K In function ‘[01m[Kvoid StateMachine()[m[K’:
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_3D_resting_waypoint_controller.cpp:367:61:[m[K [01;31m[Kerror: [m[K‘[01m[Kpolar_a[m[K’ was not declared in this scope
+   ControlStrategy(control_pos, last_effort*adaptive, sign_p*[01;31m[Kpolar_a[m[K, sign_a*azimuth_a);
+                                                             [01;31m[K^~~~~~~[m[K
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_3D_resting_waypoint_controller.cpp:367:61:[m[K [01;36m[Knote: [m[Ksuggested alternative: ‘[01m[Kpolar_angle[m[K’
+   ControlStrategy(control_pos, last_effort*adaptive, sign_p*[01;36m[Kpolar_a[m[K, sign_a*azimuth_a);
+                                                             [01;36m[K^~~~~~~[m[K
+                                                             [32m[Kpolar_angle[m[K
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_3D_resting_waypoint_controller.cpp:367:77:[m[K [01;31m[Kerror: [m[K‘[01m[Kazimuth_a[m[K’ was not declared in this scope
+   ControlStrategy(control_pos, last_effort*adaptive, sign_p*polar_a, sign_a*[01;31m[Kazimuth_a[m[K);
+                                                                             [01;31m[K^~~~~~~~~[m[K
+[01m[K/home/emanuele/catkin_ws/src/CrazyS/rotors_control/src/nodes/high_level_3D_resting_waypoint_controller.cpp:367:77:[m[K [01;36m[Knote: [m[Ksuggested alternative: ‘[01m[Kazimuth_angle[m[K’
+   ControlStrategy(control_pos, last_effort*adaptive, sign_p*polar_a, sign_a*[01;36m[Kazimuth_a[m[K);
+                                                                             [01;36m[K^~~~~~~~~[m[K
+                                                                             [32m[Kazimuth_angle[m[K
+make[2]: *** [CMakeFiles/high_level_3D_resting_waypoint_controller.dir/src/nodes/high_level_3D_resting_waypoint_controller.cpp.o] Error 1
+make[1]: *** [CMakeFiles/high_level_3D_resting_waypoint_controller.dir/all] Error 2
+make: *** [all] Error 2
